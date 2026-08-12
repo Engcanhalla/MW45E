@@ -329,7 +329,7 @@ var ACH = Math.round(DATA.achieveRate||80);
 var app = {
   phase:'home',
   cardIdx:0, flipped:false,
-  basicPool:DATA.basicQ, basicIdx:0, basicScore:0, basicDone:false, basicPicked:null, basicPassed:false,
+  basicPool:DATA.basicQ, basicIdx:0, basicScore:0, basicDone:false, basicPicked:null, basicPassed:true,
   basicWrongItems:[], basicReview:false,
   advPool:DATA.advQ, advIdx:0, advScore:0, advDone:false, advLocked:false,
   advWrongItems:[], advReview:false,
@@ -361,7 +361,6 @@ function startBasicReview(){
   enterStage('basic'); render();
 }
 function startAdv(){
-  if(!app.basicPassed) return;
   SFX.click(); A.init(); app.phase='adv';
   app.advPool=DATA.advQ; app.advIdx=0; app.advScore=0; app.advDone=false; app.advLocked=false;
   app.advWrongItems=[]; app.advReview=false;
