@@ -568,6 +568,7 @@ function renderAdv(){
   return top+progressHtml+'<div class="card quiz-card" id="advCard"><div class="blank-cat">'+esc(it.cat)+' \u00b7 '+(app.advIdx+1)+'/'+qs.length+'</div><div class="blank-stem">'+esc(it.stem)+'<br>'+stemHtml+'</div>'+koHtml
     + '<div class="answer-row" id="advAnswer">'+renderWordAnswerHtml(it.word)+'</div>'
     + '<div class="feedback" id="advFeedback"></div>'
+    + '<button class="btn btn-secondary" id="advHint" type="button">\ud83d\udd0a 힌트</button>'
     + '<button class="btn" id="advSubmit">제출</button></div>';
 }
 function normalizeAnswer(s){ return String(s||'').toLowerCase().replace(/\s+/g,' ').trim(); }
@@ -730,6 +731,10 @@ function wire(){
     if(firstInput) setTimeout(function(){ firstInput.focus(); }, 60);
   }
   var advSubmit=$('#advSubmit'); if(advSubmit) advSubmit.addEventListener('click', submitAdv);
+  var advHint=$('#advHint'); if(advHint) advHint.addEventListener('click', function(){
+    var qs=app.advPool||DATA.advQ; var it=qs[app.advIdx];
+    if(it) speak(it.word);
+  });
   var advRestart=$('#advRestart'); if(advRestart) advRestart.addEventListener('click', startAdv);
   var advRetryWrong=$('#advRetryWrong'); if(advRetryWrong) advRetryWrong.addEventListener('click', startAdvReview);
 }
