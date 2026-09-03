@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연습문제지 — Whats_p32_fungus (심화)</title>
+<style>
+body{margin:0;background:#e9e9e9;font-family:'Noto Sans KR','Malgun Gothic',sans-serif;}
+.toolbar{position:sticky;top:0;z-index:50;max-width:860px;margin:0 auto;padding:10px 14px;background:#fff;border-bottom:2px solid #3f8a83;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.toolbar button{font-family:inherit;font-size:13px;padding:7px 14px;cursor:pointer;border:1.5px solid #3f8a83;background:#fff;color:#2f6f69;border-radius:5px;font-weight:700;}
+.toolbar button.active{background:#3f8a83;color:#fff;}
+.toolbar button:disabled{cursor:not-allowed;opacity:.45;background:#eee;color:#888;border-color:#bbb;}
+
+.ws{--ink:#1a1a1a;--soft:#444;--line:#1a1a1a;max-width:800px;margin:16px auto;background:#fff;color:var(--ink);
+  padding:26px 30px 40px;border:1px solid #ccc;font-family:'Noto Sans KR','Malgun Gothic',sans-serif;}
+.ws h1{font-size:21px;margin:0 0 6px;}
+.ws .meta{font-size:13.5px;color:var(--soft);margin-bottom:6px;}
+.ws .namebar{font-size:14px;margin:10px 0 18px;border:1px solid #999;border-radius:6px;padding:8px 12px;display:flex;gap:26px;}
+.ws .namebar span{display:inline-flex;align-items:center;gap:6px;}
+.ws .passage{border:1.5px solid var(--line);border-radius:8px;padding:18px 22px 8px;}
+.ws-seg{display:flex;align-items:stretch;gap:0;}
+.ws-seg + .ws-seg{border-top:1.5px dashed #999;}
+.ws-seg-text{flex:1;min-width:0;padding:4px 18px 6px 0;}
+.ws .stag{display:inline-block;min-width:20px;text-align:center;font-size:12px;color:#999;border:1px solid #ccc;border-radius:4px;padding:1px 5px;margin-right:6px;vertical-align:middle;}
+.ws-sentence{font-size:16.5px;line-height:2.05;margin-bottom:4px;}
+.ws-tag{display:inline-block;font-size:12px;font-weight:800;border:1.5px solid var(--line);border-radius:4px;padding:1px 7px;margin-right:6px;vertical-align:middle;}
+.tag-svoc{background:#fff;}
+.interp-underline{border-bottom:2px dotted var(--ink);padding-bottom:1px;}
+.ws-blank{font-size:14px;color:#333;margin:2px 0 12px 26px;}
+.blank-fill{display:inline-block;border-bottom:1px dotted #666;min-width:220px;height:1px;vertical-align:middle;margin-left:2px;}
+.blank-fill.short{min-width:40px;}
+.blank-lines{display:block;margin-top:4px;}
+.blank-lines .ln{display:block;border-bottom:1px dotted #888;height:22px;}
+.para-box{width:190px;flex:0 0 190px;border-left:1.5px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;gap:8px;background:#fbfbfb;}
+.para-range{font-size:13px;font-weight:700;color:#555;}
+.para-write .ln{display:block;border-bottom:1px dotted #888;height:24px;}
+.task-block{border-top:2px solid var(--line);margin-top:22px;padding-top:14px;}
+.task-title{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+.task-instr{font-size:13.5px;color:var(--soft);margin-bottom:10px;line-height:1.6;}
+.kw-match{display:flex;gap:30px;margin-bottom:8px;}
+.kw-col{flex:1;display:flex;flex-direction:column;gap:14px;}
+.kw-chip{border:1.5px solid var(--line);border-radius:16px;padding:6px 14px;font-size:13.5px;}
+.kw-order-blank{font-size:12.5px;color:#555;margin-right:4px;}
+.kw-desc-block{background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:8px 12px;}
+.kw-desc-ans{font-size:13.5px;line-height:1.7;}
+.paraphrase-ko{font-size:14.5px;font-weight:700;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:8px 12px;margin-bottom:8px;}
+.hint-box{font-size:13px;color:var(--soft);border:1px dashed #999;border-radius:6px;padding:6px 10px;margin-bottom:8px;}
+.gw-item{margin-bottom:16px;}
+.gw-hint{font-size:13.5px;margin-bottom:4px;color:var(--soft);}
+.gw-grammar-ans{font-size:13px;margin-bottom:4px;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:4px 10px;display:inline-block;}
+.gw-ko{font-size:14.5px;font-weight:700;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:6px 12px;margin-bottom:6px;}
+.ws .footnote{font-size:12.5px;color:#777;margin-top:18px;border-top:1px dashed #bbb;padding-top:8px;}
+.ws .ans{display:none;}
+.ws.answer-mode .ans{display:inline;color:#111;font-weight:700;}
+.ws.answer-mode .kw-desc-block.ans{display:block;}
+.ws.answer-mode .interp-blank .blank-fill,
+.ws.answer-mode .ws-blank .blank-fill.short{display:none;}
+.ws.answer-mode .blank-lines{display:none;}
+.ws.answer-mode .svoc-answer{display:block;}
+.ws.answer-mode .para-write{display:none;}
+.ws.answer-mode .para-ans{display:block;}
+.svoc-answer{background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:6px 10px;margin-left:0;}
+
+/* --- 인터랙티브(화면 입력형) 요소 --- */
+.ws-input{font-family:inherit;font-size:14.5px;color:#111;border:none;border-bottom:1.5px solid #666;background:#fff;padding:3px 6px;min-width:240px;outline:none;}
+.ws-input:focus{border-bottom-color:#3f8a83;background:#f7fdfc;}
+.ws-input.wide{width:70%;min-width:260px;}
+.ws-select{font-family:inherit;font-size:14px;color:#111;border:1.5px solid #666;border-radius:6px;padding:3px 8px;background:#fff;cursor:pointer;}
+.qtag{display:inline-block;font-size:11px;font-weight:700;color:#2f6f69;background:#eef6f5;border:1px solid #bcdcd8;border-radius:5px;padding:1px 7px;margin-right:6px;vertical-align:middle;letter-spacing:.3px;}
+.pts{display:inline-block;font-size:11.5px;font-weight:700;color:#a15c00;background:#fff6e6;border:1px solid #f0d29a;border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:middle;}
+.q-row{margin:10px 0 16px;padding-left:2px;}
+.q-label{font-size:13.5px;color:#333;margin-bottom:5px;}
+.hint-btn{font-family:inherit;font-size:12px;font-weight:700;color:#2f6f69;border:1px solid #3f8a83;background:#fff;border-radius:5px;padding:2px 10px;cursor:pointer;margin-left:8px;vertical-align:middle;}
+.hint-btn:hover{background:#eef6f5;}
+.hint-ko{display:none;font-size:13.5px;color:#2f6f69;background:#eef6f5;border:1px dashed #7fc7bf;border-radius:6px;padding:5px 10px;margin-top:6px;}
+.hint-ko.show{display:block;}
+.arrange-tray{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1.5px dashed #999;border-radius:8px;background:#fafafa;min-height:46px;margin-top:2px;}
+.tile{font-family:inherit;font-size:15px;background:#fff;border:1.5px solid #333;border-radius:7px;padding:6px 13px 6px 8px;cursor:grab;user-select:none;box-shadow:0 1px 0 #ccc;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;touch-action:none;}
+.tile.dragging{opacity:.4;}
+.tile:active{cursor:grabbing;}
+.num-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#3f8a83;color:#fff;font-size:12px;font-weight:800;pointer-events:none;}
+.arrange-answer{display:none;font-size:14.5px;font-weight:700;color:#111;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:6px 10px;margin-top:8px;}
+.ws.answer-mode .arrange-answer{display:block;}
+.correct-tag{display:none;font-size:12.5px;}
+.ws.answer-mode .correct-tag{display:inline-block;color:#127a4f;font-weight:700;margin-left:8px;}
+.grade-box{margin-top:22px;border:2px solid #3f8a83;border-radius:8px;padding:14px 16px;background:#f4fbfa;display:none;}
+.grade-box.show{display:block;}
+.grade-box h3{margin:0 0 8px;font-size:15px;color:#2f6f69;}
+.grade-json{white-space:pre-wrap;font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#fff;border:1px solid #cde;border-radius:6px;padding:8px;max-height:260px;overflow:auto;}
+.mc-mark{font-weight:700;margin:0 3px 0 1px;}
+.mc-choices{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.mc-choices label{font-size:14px;cursor:pointer;display:flex;gap:7px;align-items:flex-start;}
+.ws-para{line-height:1.95;margin:8px 0;font-size:15px;}
+
+.score-banner{display:none;position:sticky;top:0;z-index:40;margin:0 0 18px;padding:12px 16px;border-radius:9px;border:2px solid #3f8a83;background:#f4fbfa;box-shadow:0 2px 6px rgba(0,0,0,.08);}
+.score-banner.show{display:block;}
+.score-banner.pass{border-color:#2f9e6b;background:#eafaf1;}
+.score-banner.fail{border-color:#d0555f;background:#fdeeef;}
+.score-banner .sb-main{font-size:16.5px;font-weight:800;color:#1c1c1c;}
+.score-banner .sb-sub{font-size:12.5px;color:#555;margin-top:3px;}
+.qgrade{display:none;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+.ws.answer-mode .qgrade.show{display:inline-block;}
+.qgrade.ok{background:#e3f7ee;color:#127a4f;border:1px solid #8fd9b6;}
+.qgrade.bad{background:#fdecee;color:#b23a48;border:1px solid #f3b7bd;}
+.qgrade.partial{background:#fff6e6;color:#a15c00;border:1px solid #f0d29a;}
+.qgrade.pending{background:#eef2f7;color:#555;border:1px solid #cfd8e3;}
+.gc-student-ans{display:block;width:70%;min-width:260px;margin-top:2px;padding:6px 9px;font-size:14.5px;color:#111;background:#f7fdfc;border:1px solid #666;border-radius:5px;white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;line-height:1.55;}
+.gc-student-ans.empty{color:#999;font-style:italic;}
+.gc-partial-reason{margin-top:6px;font-size:12.5px;color:#a15c00;background:#fff6e6;border:1px dashed #f0d29a;border-radius:6px;padding:6px 10px;line-height:1.5;white-space:pre-wrap;overflow-wrap:break-word;}
+
+@media print{
+  .toolbar{display:none;}
+  body{background:#fff;}
+  .ws{border:none;margin:0;max-width:none;padding:14mm 14mm 10mm;}
+  .task-block{page-break-inside:avoid;}
+  .s-wrap{page-break-inside:avoid;}
+  .score-banner{position:static;box-shadow:none;}
+}
+</style>
+</head>
+<body>
+<div class="toolbar"><button id="bSubmit" onclick="submitTest()">✅ 테스트 제출</button><button id="bRetry" class="active" onclick="retryTest()">🔁 재도전</button><button onclick="window.print()">🖨 인쇄 / PDF</button></div>
+<div class="ws" id="wsRoot">
+<div class="score-banner" id="scoreBanner"><div class="sb-main" id="sbMain"></div><div class="sb-sub" id="sbSub"></div></div>
+<h1>📝 연습문제지 — 심화</h1>
+<div class="meta">지문: <b>Whats_p32_fungus</b> · 대상 학년: <b>중2</b> · 난이도: <b>중1</b></div>
+<div class="namebar"><span>이름: <input type="text" class="ws-input" data-role="studentName" style="min-width:150px;" placeholder="이름을 입력"></span><span>학년: <select class="ws-select" data-role="grade"><option value="">선택</option><option>고3</option><option>고2</option><option>고1</option><option>중3</option><option>중2</option><option>중1</option></select></span></div>
+<div class="task-instr" style="margin-bottom:14px;">각 문항의 지시에 따라 답을 입력·선택하세요. 모두 푼 뒤 상단 <b>테스트 제출</b>을 누르면 채점됩니다.</div>
+<div class="q-row" data-qid="A-TRANS-01" data-qtype="interp" data-points="5" data-answer="효모는 반죽이 부풀어 오르도록 도와주고, 오븐에서 반죽을 구우면 맛있고 부드러운 빵이 돼."><div class="q-label"><span class="qtag">문제1</span>다음 문장을 우리말로 해석하시오<span class="pts">5점</span></div><div class="ws-sentence" style="margin:4px 0;">Yeast helps dough get bigger, and when you cook the dough in an oven, it turns into tasty and soft bread.</div><input type="text" class="ws-input wide" data-role="answer" placeholder="우리말로 해석"><div class="ans" style="margin-top:4px;">정답 ▸ 효모는 반죽이 부풀어 오르도록 도와주고, 오븐에서 반죽을 구우면 맛있고 부드러운 빵이 돼.</div></div><div class="q-row" data-qid="A-TRANS-02" data-qtype="interp" data-points="5" data-answer="하지만 그게 다가 아니야."><div class="q-label"><span class="qtag">문제2</span>다음 문장을 우리말로 해석하시오<span class="pts">5점</span></div><div class="ws-sentence" style="margin:4px 0;">But there is more.</div><input type="text" class="ws-input wide" data-role="answer" placeholder="우리말로 해석"><div class="ans" style="margin-top:4px;">정답 ▸ 하지만 그게 다가 아니야.</div></div><div class="q-row" data-qid="A-ARR-04" data-qtype="arrange" data-points="4" data-answer="We | live | inside your home, | too."><div class="q-label"><span class="qtag">문제3</span>우리말 뜻에 맞게 단어 조각을 손가락(터치) 또는 마우스로 끌어서 배열하시오<span class="pts">4점</span></div><div style="font-weight:700;margin:4px 0;">뜻: 우리는 네 집 안에도 살아.</div><div class="arrange-tray" data-arrange="1"><span class="tile" data-tok="We"><b class="num-badge">1</b>We</span><span class="tile" data-tok="live"><b class="num-badge">2</b>live</span><span class="tile" data-tok="too."><b class="num-badge">3</b>too.</span><span class="tile" data-tok="inside your home,"><b class="num-badge">4</b>inside your home,</span></div><div class="arrange-answer">정답 순서 ▸ We live inside your home, too.</div></div><div class="q-row" data-qid="A-CM-01" data-qtype="contentmatch" data-points="3" data-match="true" data-word="" data-correct=""><div class="q-label"><span class="qtag">문제4</span>다음 진술이 본문 내용과 일치하면 O, 그렇지 않으면 X를 고르시오<span class="pts">3점</span></div><div class="ws-para">Mushrooms prefer to grow in dark, cold, and wet places, so you may find them under a tree.</div><div class="mc-choices"><label><input type="radio" name="A-CM-01-ox" data-role="cmchoice" value="O"> O (일치)</label><label><input type="radio" name="A-CM-01-ox" data-role="cmchoice" value="X"> X (불일치)</label></div><div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">X라고 생각되면, 틀린 단어와 올바른 단어를 쓰시오: <input type="text" class="ws-input" data-role="cmword" placeholder="틀린 단어" style="min-width:120px;"><span style="font-weight:700;">→</span><input type="text" class="ws-input" data-role="cmcorrect" placeholder="올바른 단어" style="min-width:120px;"></div><div class="ans" style="margin-top:6px;">정답 ▸ O (내용과 일치함)</div></div><div class="q-row" data-qid="A-CM-02" data-qtype="contentmatch" data-points="3" data-match="false" data-word="smaller" data-correct="bigger"><div class="q-label"><span class="qtag">문제5</span>다음 진술이 본문 내용과 일치하면 O, 그렇지 않으면 X를 고르시오<span class="pts">3점</span></div><div class="ws-para">Yeast makes dough smaller, and cooking it in an oven turns it into soft and tasty bread.</div><div class="mc-choices"><label><input type="radio" name="A-CM-02-ox" data-role="cmchoice" value="O"> O (일치)</label><label><input type="radio" name="A-CM-02-ox" data-role="cmchoice" value="X"> X (불일치)</label></div><div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">X라고 생각되면, 틀린 단어와 올바른 단어를 쓰시오: <input type="text" class="ws-input" data-role="cmword" placeholder="틀린 단어" style="min-width:120px;"><span style="font-weight:700;">→</span><input type="text" class="ws-input" data-role="cmcorrect" placeholder="올바른 단어" style="min-width:120px;"></div><div class="ans" style="margin-top:6px;">정답 ▸ X (틀린 단어: smaller → bigger)</div></div><div class="q-row" data-qid="A-CM-03" data-qtype="contentmatch" data-points="3" data-match="true" data-word="" data-correct=""><div class="q-label"><span class="qtag">문제6</span>다음 진술이 본문 내용과 일치하면 O, 그렇지 않으면 X를 고르시오<span class="pts">3점</span></div><div class="ws-para">Fungi can also help produce delicious cheese and yogurt.</div><div class="mc-choices"><label><input type="radio" name="A-CM-03-ox" data-role="cmchoice" value="O"> O (일치)</label><label><input type="radio" name="A-CM-03-ox" data-role="cmchoice" value="X"> X (불일치)</label></div><div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">X라고 생각되면, 틀린 단어와 올바른 단어를 쓰시오: <input type="text" class="ws-input" data-role="cmword" placeholder="틀린 단어" style="min-width:120px;"><span style="font-weight:700;">→</span><input type="text" class="ws-input" data-role="cmcorrect" placeholder="올바른 단어" style="min-width:120px;"></div><div class="ans" style="margin-top:6px;">정답 ▸ O (내용과 일치함)</div></div><div class="q-row" data-qid="A-CM-04" data-qtype="contentmatch" data-points="3" data-match="false" data-word="bright" data-correct="dark"><div class="q-label"><span class="qtag">문제7</span>다음 진술이 본문 내용과 일치하면 O, 그렇지 않으면 X를 고르시오<span class="pts">3점</span></div><div class="ws-para">Mold can be found in bright places in your home, such as the basement or the bathroom.</div><div class="mc-choices"><label><input type="radio" name="A-CM-04-ox" data-role="cmchoice" value="O"> O (일치)</label><label><input type="radio" name="A-CM-04-ox" data-role="cmchoice" value="X"> X (불일치)</label></div><div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">X라고 생각되면, 틀린 단어와 올바른 단어를 쓰시오: <input type="text" class="ws-input" data-role="cmword" placeholder="틀린 단어" style="min-width:120px;"><span style="font-weight:700;">→</span><input type="text" class="ws-input" data-role="cmcorrect" placeholder="올바른 단어" style="min-width:120px;"></div><div class="ans" style="margin-top:6px;">정답 ▸ X (틀린 단어: bright → dark)</div></div><div class="q-row" data-qid="A-GFIX-01" data-qtype="interp" data-points="5" data-answer="baked → bake"><div class="q-label"><span class="qtag">문제8</span>다음 문장에는 어법상 틀린 부분이 한 곳 있다. 틀린 부분을 찾아 <b>왼쪽 빈칸에 틀린 표현</b>, <b>오른쪽 빈칸에 올바른 표현</b>을 쓰시오<span class="pts">5점</span></div><div class="ws-sentence" style="margin:4px 0;">Yeast makes dough rise, and when you baked the dough, it becomes delicious and soft bread.</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px;"><input type="text" class="ws-input" data-role="gfixWrong" placeholder="틀린 표현" style="min-width:140px;" oninput="advSyncGFix(this)"><span style="font-weight:700;">→</span><input type="text" class="ws-input" data-role="gfixCorrect" placeholder="올바른 표현" style="min-width:140px;" oninput="advSyncGFix(this)"></div><input type="hidden" data-role="answer" value=""><div class="ans" style="margin-top:4px;">정답 ▸ baked → bake (시제 일치)</div></div><div class="q-row" data-qid="A-CLOZE-01" data-qtype="choice" data-points="5" data-answer="1"><div class="q-label"><span class="qtag">문제9</span>요약문의 빈칸 (A),(B)에 들어갈 말로 가장 적절한 것은?<span class="pts">5점</span></div><div class="ws-para">Fungi, which can look like mushrooms, mold, or yeast, live in (A) ______ places like basements and bathrooms, and also help (B) ______ foods such as bread, cheese, and yogurt.</div><div class="mc-choices"><label><input type="radio" name="A-CLOZE-01" data-role="choice" value="1"> 1. (A) dark and wet … (B) make</label><label><input type="radio" name="A-CLOZE-01" data-role="choice" value="2"> 2. (A) bright and dry … (B) make</label><label><input type="radio" name="A-CLOZE-01" data-role="choice" value="3"> 3. (A) dark and wet … (B) eat</label><label><input type="radio" name="A-CLOZE-01" data-role="choice" value="4"> 4. (A) warm and dry … (B) grow</label><label><input type="radio" name="A-CLOZE-01" data-role="choice" value="5"> 5. (A) cold and clean … (B) buy</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 1번</div></div><div class="q-row" data-qid="A-GW-01" data-qtype="interp" data-points="5" data-answer="My bag is heavier than your bag."><div class="q-label"><span class="qtag">문제10</span>다음을 영어로 쓰시오 <span style="font-weight:400;opacity:.8;">(비교급 활용)</span><span class="pts">5점</span></div><div style="font-weight:700;margin:4px 0;">내 가방은 네 가방보다 더 무겁다.</div><div style="font-size:12.5px;opacity:.8;margin:2px 0;">힌트: heavier, than, bag</div><input type="text" class="ws-input wide" data-role="answer" placeholder="영어로 작성"><div class="ans" style="margin-top:4px;">모범답안 ▸ My bag is heavier than your bag.</div></div><div class="q-row" data-qid="A-GW-02" data-qtype="interp" data-points="5" data-answer="She can play the piano very well."><div class="q-label"><span class="qtag">문제11</span>다음을 영어로 쓰시오 <span style="font-weight:400;opacity:.8;">(조동사 can 활용)</span><span class="pts">5점</span></div><div style="font-weight:700;margin:4px 0;">그녀는 피아노를 매우 잘 칠 수 있다.</div><div style="font-size:12.5px;opacity:.8;margin:2px 0;">힌트: can, play, piano</div><input type="text" class="ws-input wide" data-role="answer" placeholder="영어로 작성"><div class="ans" style="margin-top:4px;">모범답안 ▸ She can play the piano very well.</div></div><div class="q-row" data-qid="A-KWS-01" data-qtype="interp" data-points="5" data-answer="Fungi make dough rise and help us."><div class="q-label"><span class="qtag">문제12</span>다음 핵심 키워드를 모두 사용하여 지문 내용을 영어로 요약하시오 <span style="font-weight:400;opacity:.8;">(8단어 이내)</span> · <span style="font-weight:400;opacity:.8;">(사역동사 make+목적어+동사원형 활용)</span><span class="pts">5점</span></div><div style="font-weight:700;margin:4px 0;">키워드: make, dough, rise, fungi</div><div style="font-size:13px;opacity:.8;margin:2px 0 8px;">제시 문장(우리말): 균류는 반죽을 부풀게 만들고 우리를 돕는다.</div><input type="text" class="ws-input wide" data-role="answer" placeholder="영어 요약 (8단어 이내)"><div class="ans" style="margin-top:4px;">모범 요약 ▸ Fungi make dough rise and help us.</div></div><div class="grade-box" id="gradeBox"><h3>📊 채점 결과</h3><div id="gradeBody"></div></div>
+<div class="footnote">객관식은 자동 채점, 서술형(해석·영작·어법교정)은 심화 AI(Gemini)로 채점됩니다. · passage-analysis-map</div>
+</div>
+<script>window.WS_CONFIG={"testName":"Whats_p32_fungus_심화","level":"심화","threshold":70,"endpoint":"https://script.google.com/macros/s/AKfycbxHb25T0B2rBRvTMo4kF2hDHy0WlQSYOpLTDi2yUYoU7QPv3VotIjcKdGus6IDQckxs8w/exec"};</script>
+<script>
+(function(){window.__WS_START=new Date();})();
+function wsHint(btn){var k=btn.parentNode.querySelector('.hint-ko');if(k)k.classList.toggle('show');}
+function advSyncGFix(el){var row=el.closest('[data-qtype="interp"]');if(!row)return;var w=row.querySelector('[data-role=gfixWrong]');var c=row.querySelector('[data-role=gfixCorrect]');var hidden=row.querySelector('input[type=hidden][data-role=answer]');if(hidden)hidden.value=(w?w.value.trim():'')+' → '+(c?c.value.trim():'');}
+function _setReveal(on){var r=document.getElementById('wsRoot');r.classList.toggle('answer-mode',on);var s=document.getElementById('bSubmit'),t=document.getElementById('bRetry');if(s){s.classList.toggle('active',on);s.disabled=on;}if(t)t.classList.toggle('active',!on);}
+function _renumberTray(tray){[].slice.call(tray.querySelectorAll('.tile')).forEach(function(t,i){var b=t.querySelector('.num-badge');if(b)b.textContent=(i+1);});}
+(function(){
+var dragEl=null, tray=null, startX=0, startY=0, moved=false, pid=null;
+function afterEl(tr,x){
+  var els=[].slice.call(tr.querySelectorAll('.tile:not(.dragging)'));
+  var best={o:-Infinity,el:null};
+  els.forEach(function(el){var b=el.getBoundingClientRect();var off=x-b.left-b.width/2;if(off<0&&off>best.o)best={o:off,el:el};});
+  return best.el;
+}
+document.addEventListener('pointerdown',function(e){
+  var t=e.target.closest&&e.target.closest('.tile');
+  if(!t)return;
+  var tr=t.closest('.arrange-tray');
+  if(!tr)return;
+  dragEl=t;tray=tr;moved=false;startX=e.clientX;startY=e.clientY;pid=e.pointerId;
+  try{t.setPointerCapture(e.pointerId);}catch(_){}
+});
+document.addEventListener('pointermove',function(e){
+  if(!dragEl||e.pointerId!==pid)return;
+  if(!moved&&(Math.abs(e.clientX-startX)>4||Math.abs(e.clientY-startY)>4)){moved=true;dragEl.classList.add('dragging');}
+  if(!moved)return;
+  e.preventDefault();
+  var after=afterEl(tray,e.clientX);
+  if(after==null)tray.appendChild(dragEl);else tray.insertBefore(dragEl,after);
+},{passive:false});
+function endDrag(e){
+  if(!dragEl||(e&&e.pointerId!==pid))return;
+  dragEl.classList.remove('dragging');
+  if(tray)_renumberTray(tray);
+  dragEl=null;tray=null;pid=null;
+}
+document.addEventListener('pointerup',endDrag);
+document.addEventListener('pointercancel',endDrag);
+})();
+function _p2(n){return(n<10?'0':'')+n;}
+function _fmtRange(a,b){function dd(x){return x.getFullYear()+'-'+_p2(x.getMonth()+1)+'-'+_p2(x.getDate());}function tt(x){return _p2(x.getHours())+':'+_p2(x.getMinutes());}var ds=dd(a),de=dd(b);return ds===de?(ds+' '+tt(a)+'~'+tt(b)):(ds+' '+tt(a)+'~'+de+' '+tt(b));}
+function _collect(){var rows=[].slice.call(document.querySelectorAll('[data-qid]'));var out=[];var objEarned=0,objMax=0,subjMax=0,subjCount=0;
+rows.forEach(function(r){var qid=r.getAttribute('data-qid');var type=r.getAttribute('data-qtype');var pts=+(r.getAttribute('data-points')||0);var rec={qid:qid,type:type,max:pts};
+if(type==='interp'){var i=r.querySelector('[data-role=answer]');rec.student=i?i.value.trim():'';rec.answer=r.getAttribute('data-answer')||'';rec.autoGraded=false;var hraw=r.getAttribute('data-hints');if(hraw){try{rec.hints=JSON.parse(hraw);}catch(_){rec.hints=hraw.split(',').map(function(x){return x.trim();}).filter(Boolean);}}subjMax+=pts;subjCount++;}
+else if(type==='arrange'){var toks=[].slice.call(r.querySelectorAll('.tile')).map(function(t){return t.getAttribute('data-tok');});rec.student=toks.join(' | ');rec.answer=r.getAttribute('data-answer')||'';rec.autoGraded=true;rec.correct=(rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='match'){var m=r.querySelector('[data-role=match]');rec.student=m?m.value:'';rec.answer=r.getAttribute('data-answer-match')||'';rec.autoGraded=true;rec.correct=(rec.student!==''&&rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='topic-num'){var s=r.querySelector('[data-role=answer]');rec.student=s?s.value:'';rec.answer=r.getAttribute('data-answer');rec.answerAlt=r.getAttribute('data-answer-alt')||null;rec.autoGraded=true;var ap=+(r.getAttribute('data-points-alt')||0);if(rec.student===rec.answer){rec.awarded=pts;rec.correct=true;}else if(rec.answerAlt&&rec.student===rec.answerAlt){rec.awarded=ap;rec.correct='alt';}else{rec.awarded=0;rec.correct=false;}objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='choice'){var sc=r.querySelector('[data-role=choice]:checked');rec.student=sc?sc.value:'';rec.answer=r.getAttribute('data-answer')||'';rec.autoGraded=true;rec.correct=(rec.student!==''&&rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='multichoice'){var ck=[].slice.call(r.querySelectorAll('[data-role=mc]:checked')).map(function(x){return x.value;});rec.student=ck.slice().sort().join(',');rec.answer=(r.getAttribute('data-answer')||'').split(',').map(function(x){return x.trim();}).filter(Boolean).sort().join(',');rec.autoGraded=true;rec.correct=(rec.student!==''&&rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='contentmatch'){var isMatch=(r.getAttribute('data-match')==='true');var wAns=(r.getAttribute('data-word')||'').trim().toLowerCase().replace(/[^a-z']/g,'');var cAns=(r.getAttribute('data-correct')||'').trim().toLowerCase().replace(/[^a-z']/g,'');var ox=r.querySelector('[data-role=cmchoice]:checked');var oxVal=ox?ox.value:'';var wi=r.querySelector('[data-role=cmword]');var wVal=(wi?wi.value:'').trim().toLowerCase().replace(/[^a-z']/g,'');var ci=r.querySelector('[data-role=cmcorrect]');var cVal=(ci?ci.value:'').trim().toLowerCase().replace(/[^a-z']/g,'');rec.student=oxVal+((wVal||cVal)?(' / '+wVal+' → '+cVal):'');rec.answer=(isMatch?'O':'X')+(isMatch?'':(' / '+wAns+' → '+cAns));var half=Math.round(pts*0.5);var awarded=0;if(isMatch){awarded=(oxVal==='O')?pts:0;}else{var judgeOk=(oxVal==='X');if(judgeOk)awarded+=half;if(judgeOk&&wVal&&cVal&&wVal===wAns&&cVal===cAns)awarded+=(pts-half);}rec.autoGraded=true;rec.correct=(awarded===pts);rec.awarded=awarded;objEarned+=awarded;objMax+=pts;}
+out.push(rec);});
+return {answers:out,objEarned:objEarned,objMax:objMax,subjMax:subjMax,subjCount:subjCount};}
+function _payload(){var d=_collect();var cfg=window.WS_CONFIG||{};var nm=document.querySelector('[data-role=studentName]');var gr=document.querySelector('[data-role=grade]');var end=new Date();var start=window.__WS_START||end;
+return {testName:cfg.testName||document.title,level:cfg.level||'',student:nm?nm.value.trim():'',grade:gr?gr.value:'',threshold:(cfg.threshold!=null?cfg.threshold:60),startedAt:start.toISOString(),submittedAt:end.toISOString(),timeRange:_fmtRange(start,end),objectiveEarned:d.objEarned,objectiveMax:d.objMax,subjectiveMax:d.subjMax,questions:d.answers};}
+function _banner(html){var box=document.getElementById('gradeBox');var body=document.getElementById('gradeBody');if(body)body.innerHTML=html;if(box){box.classList.add('show');box.scrollIntoView({behavior:'smooth',block:'nearest'});}}
+function _scoreBanner(mainHtml, subHtml, cls){var box=document.getElementById('scoreBanner');if(!box)return;var m=document.getElementById('sbMain'),s=document.getElementById('sbSub');if(m)m.innerHTML=mainHtml;if(s)s.innerHTML=subHtml||'';box.className='score-banner show'+(cls?(' '+cls):'');box.scrollIntoView({behavior:'smooth',block:'start'});}
+function _qHost(qid){return document.querySelector('[data-qid="'+String(qid).replace(/"/g,'')+'"]');}
+function _badgeCls(awarded,max){if(max<=0)return 'ok';if(awarded>=max)return 'ok';if(awarded<=0)return 'bad';return 'partial';}
+function _setBadge(qid,cls,text){var host=_qHost(qid);if(!host)return;var tag=host.querySelector('.qtag');if(!tag)return;var b=tag.parentNode.querySelector('.qgrade[data-for="'+String(qid).replace(/"/g,'')+'"]');if(!b){b=document.createElement('span');b.setAttribute('data-for',qid);tag.parentNode.insertBefore(b,tag.nextSibling);}b.className='qgrade show '+cls;b.textContent=text;}
+function _clearBadges(){[].slice.call(document.querySelectorAll('.qgrade')).forEach(function(b){b.parentNode.removeChild(b);});}
+function _markObjective(answers){answers.forEach(function(rec){if(rec.autoGraded===false)return;var cls=_badgeCls(rec.awarded,rec.max);var icon=cls==='ok'?' ✅':(cls==='bad'?' ❌':' ▲');_setBadge(rec.qid,cls,(rec.awarded||0)+'/'+rec.max+'점'+icon);});}
+function _markSubjectivePending(answers){answers.forEach(function(rec){if(rec.autoGraded!==false)return;if(!String(rec.student||'').trim()){_setBadge(rec.qid,'bad','0/'+rec.max+'점 ❌ (무응답)');}else{_setBadge(rec.qid,'pending','⏳ 채점중');}});}
+function _markSubjectiveResult(grades){(grades||[]).forEach(function(g){var max=Number(g.max)||0,awarded=Number(g.awarded)||0;if(g.note){_setBadge(g.qid,'bad','⚠ '+g.note);return;}var cls=_badgeCls(awarded,max);var icon=cls==='ok'?' ✅':(cls==='bad'?' ❌':' ▲');_setBadge(g.qid,cls,awarded+'/'+max+'점'+icon);});}
+function submitTest(){var wsRoot=document.getElementById('wsRoot');if(wsRoot&&wsRoot.classList.contains('answer-mode')){_banner('<div style="color:#b23a48;font-weight:700;">⚠ 이미 제출된 테스트입니다.</div><div style="font-size:13px;margin-top:4px;color:#555;">정답이 공개된 상태에서는 다시 제출할 수 없습니다. 위 🔁 재도전 버튼을 눌러 답을 지우고 처음부터 다시 푸어주세요.</div>');return;}
+_setReveal(true);var p=_payload();var cfg=window.WS_CONFIG||{};var objPct=p.objectiveMax?Math.round(p.objectiveEarned/p.objectiveMax*100):0;var subjN=p.questions.filter(function(q){return q.autoGraded===false;}).length;
+_markObjective(p.questions);_markSubjectivePending(p.questions);
+if(!cfg.endpoint){_scoreBanner('객관식 자동 채점: '+p.objectiveEarned+' / '+p.objectiveMax+'점 ('+objPct+'%)','서술형 '+subjN+'문항('+p.subjectiveMax+'점)은 문항 엵에 공개된 정답과 비교해 확인하세요. (구글시트 URL을 연결하면 Gemini가 서술형까지 자동채점하고 총점·달성율을 계산합니다.)');return;}
+_scoreBanner('⏳ 채점 중…','서술형 AI 채점 · 시트 기록 중입니다.');
+fetch(cfg.endpoint,{method:'POST',body:JSON.stringify(p)}).then(function(r){return r.json();}).then(function(res){
+if(res&&res.ok){_markSubjectiveResult(res.grades);var pass=res.pass;var warn=res.warning?('<div style="font-size:12px;margin-top:4px;">⚠ '+res.warning+'</div>'):'';_scoreBanner((pass?'✅ 통과':'❌ 미통과')+' — '+res.earned+' / '+res.total+'점 ('+res.percent+'%)','기준 '+p.threshold+'% · 결과가 구글시트에 기록되었습니다.'+warn,pass?'pass':'fail');}
+else{_banner('<div style="color:#b23a48;font-weight:700;">채점 응답 오류'+(res&&res.error?(': '+res.error):'')+'</div><div style="font-size:13px;margin-top:4px;">객관식 자동: '+p.objectiveEarned+'/'+p.objectiveMax+'점. 서술형은 문항 엵 공개 정답으로 확인하세요.</div>');}
+}).catch(function(e){_banner('<div style="color:#b23a48;font-weight:700;">시트 응답을 읽지 못했습니다.</div><div style="font-size:13px;margin-top:4px;">(전송 자체는 되었을 수 있습니다.) 객관식 자동: '+p.objectiveEarned+'/'+p.objectiveMax+'점 ('+objPct+'%).</div>');});}
+function retryTest(){_setReveal(false);var box=document.getElementById('gradeBox');if(box)box.classList.remove('show');
+var sb=document.getElementById('scoreBanner');if(sb)sb.className='score-banner';
+_clearBadges();
+[].slice.call(document.querySelectorAll('input.ws-input[data-role=answer], input[type=hidden][data-role=answer], input.ws-input[data-role=cmword], input.ws-input[data-role=cmcorrect], input.ws-input[data-role=gfixWrong], input.ws-input[data-role=gfixCorrect]')).forEach(function(i){i.value='';});
+[].slice.call(document.querySelectorAll('select.ws-select[data-role=match], select.ws-select[data-role=answer]')).forEach(function(s){s.value='';});
+[].slice.call(document.querySelectorAll('.arrange-tray')).forEach(function(tray){var ts=[].slice.call(tray.querySelectorAll('.tile'));for(var a=ts.length-1;a>0;a--){var b=Math.floor(Math.random()*(a+1));tray.insertBefore(ts[a],ts[b]);}_renumberTray(tray);});
+window.__WS_START=new Date();}
+</script>
+</body>
+</html>
