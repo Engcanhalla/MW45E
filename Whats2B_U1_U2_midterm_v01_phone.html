@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📱 답안지 — 2026학년도 2학기 1차 지필평가 1학년 영어과 (기본이해)</title>
+<style>
+html{overscroll-behavior-y:contain;}
+body{margin:0;background:#e9e9e9;font-family:'Noto Sans KR','Malgun Gothic',sans-serif;overscroll-behavior-y:contain;}
+.toolbar{position:sticky;top:0;z-index:50;margin:0;padding:10px 12px;background:#fff;border-bottom:2px solid #3f8a83;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.toolbar button{font-family:inherit;font-size:14px;padding:10px 12px;cursor:pointer;border:1.5px solid #3f8a83;background:#fff;color:#2f6f69;border-radius:6px;font-weight:700;}
+.toolbar button.active{background:#3f8a83;color:#fff;}
+.toolbar button:disabled{cursor:not-allowed;opacity:.45;background:#eee;color:#888;border-color:#bbb;}
+
+.ws{--ink:#1a1a1a;--soft:#444;--line:#1a1a1a;max-width:800px;margin:16px auto;background:#fff;color:var(--ink);
+  padding:26px 30px 40px;border:1px solid #ccc;font-family:'Noto Sans KR','Malgun Gothic',sans-serif;}
+.ws h1{font-size:21px;margin:0 0 6px;}
+.ws .meta{font-size:13.5px;color:var(--soft);margin-bottom:6px;}
+.ws .namebar{font-size:14px;margin:10px 0 18px;border:1px solid #999;border-radius:6px;padding:8px 12px;display:flex;gap:26px;}
+.ws .namebar span{display:inline-flex;align-items:center;gap:6px;}
+.ws .passage{border:1.5px solid var(--line);border-radius:8px;padding:18px 22px 8px;}
+.ws-seg{display:flex;align-items:stretch;gap:0;}
+.ws-seg + .ws-seg{border-top:1.5px dashed #999;}
+.ws-seg-text{flex:1;min-width:0;padding:4px 18px 6px 0;}
+.ws .stag{display:inline-block;min-width:20px;text-align:center;font-size:12px;color:#999;border:1px solid #ccc;border-radius:4px;padding:1px 5px;margin-right:6px;vertical-align:middle;}
+.ws-sentence{font-size:16.5px;line-height:2.05;margin-bottom:4px;}
+.ws-tag{display:inline-block;font-size:12px;font-weight:800;border:1.5px solid var(--line);border-radius:4px;padding:1px 7px;margin-right:6px;vertical-align:middle;}
+.tag-svoc{background:#fff;}
+.interp-underline{border-bottom:2px dotted var(--ink);padding-bottom:1px;}
+.ws-blank{font-size:14px;color:#333;margin:2px 0 12px 26px;}
+.blank-fill{display:inline-block;border-bottom:1px dotted #666;min-width:220px;height:1px;vertical-align:middle;margin-left:2px;}
+.blank-fill.short{min-width:40px;}
+.blank-lines{display:block;margin-top:4px;}
+.blank-lines .ln{display:block;border-bottom:1px dotted #888;height:22px;}
+.para-box{width:190px;flex:0 0 190px;border-left:1.5px solid var(--line);padding:14px 12px;display:flex;flex-direction:column;gap:8px;background:#fbfbfb;}
+.para-range{font-size:13px;font-weight:700;color:#555;}
+.para-write .ln{display:block;border-bottom:1px dotted #888;height:24px;}
+.task-block{border-top:2px solid var(--line);margin-top:22px;padding-top:14px;}
+.task-title{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+.task-instr{font-size:13.5px;color:var(--soft);margin-bottom:10px;line-height:1.6;}
+.kw-match{display:flex;gap:30px;margin-bottom:8px;}
+.kw-col{flex:1;display:flex;flex-direction:column;gap:14px;}
+.kw-chip{border:1.5px solid var(--line);border-radius:16px;padding:6px 14px;font-size:13.5px;}
+.kw-order-blank{font-size:12.5px;color:#555;margin-right:4px;}
+.kw-desc-block{background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:8px 12px;}
+.kw-desc-ans{font-size:13.5px;line-height:1.7;}
+.paraphrase-ko{font-size:14.5px;font-weight:700;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:8px 12px;margin-bottom:8px;}
+.hint-box{font-size:13px;color:var(--soft);border:1px dashed #999;border-radius:6px;padding:6px 10px;margin-bottom:8px;}
+.gw-item{margin-bottom:16px;}
+.gw-hint{font-size:13.5px;margin-bottom:4px;color:var(--soft);}
+.gw-grammar-ans{font-size:13px;margin-bottom:4px;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:4px 10px;display:inline-block;}
+.gw-ko{font-size:14.5px;font-weight:700;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:6px 12px;margin-bottom:6px;}
+.ws .footnote{font-size:12.5px;color:#777;margin-top:18px;border-top:1px dashed #bbb;padding-top:8px;}
+.ws .ans{display:none;}
+.ws.answer-mode .ans{display:inline;color:#111;font-weight:700;}
+.ws.answer-mode .kw-desc-block.ans{display:block;}
+.ws.answer-mode .interp-blank .blank-fill,
+.ws.answer-mode .ws-blank .blank-fill.short{display:none;}
+.ws.answer-mode .blank-lines{display:none;}
+.ws.answer-mode .svoc-answer{display:block;}
+.ws.answer-mode .para-write{display:none;}
+.ws.answer-mode .para-ans{display:block;}
+.svoc-answer{background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:6px 10px;margin-left:0;}
+
+/* --- 인터랙티브(화면 입력형) 요소 --- */
+.ws-input{font-family:inherit;font-size:14.5px;color:#111;border:none;border-bottom:1.5px solid #666;background:#fff;padding:3px 6px;min-width:240px;outline:none;}
+.ws-input:focus{border-bottom-color:#3f8a83;background:#f7fdfc;}
+.ws-input.wide{width:70%;min-width:260px;}
+.ws-select{font-family:inherit;font-size:14px;color:#111;border:1.5px solid #666;border-radius:6px;padding:3px 8px;background:#fff;cursor:pointer;}
+.qtag{display:inline-block;font-size:11px;font-weight:700;color:#2f6f69;background:#eef6f5;border:1px solid #bcdcd8;border-radius:5px;padding:1px 7px;margin-right:6px;vertical-align:middle;letter-spacing:.3px;}
+.pts{display:inline-block;font-size:11.5px;font-weight:700;color:#a15c00;background:#fff6e6;border:1px solid #f0d29a;border-radius:5px;padding:1px 6px;margin-left:4px;vertical-align:middle;}
+.q-row{margin:10px 0 16px;padding-left:2px;}
+.q-label{font-size:13.5px;color:#333;margin-bottom:5px;}
+.hint-btn{font-family:inherit;font-size:12px;font-weight:700;color:#2f6f69;border:1px solid #3f8a83;background:#fff;border-radius:5px;padding:2px 10px;cursor:pointer;margin-left:8px;vertical-align:middle;}
+.hint-btn:hover{background:#eef6f5;}
+.hint-ko{display:none;font-size:13.5px;color:#2f6f69;background:#eef6f5;border:1px dashed #7fc7bf;border-radius:6px;padding:5px 10px;margin-top:6px;}
+.hint-ko.show{display:block;}
+.arrange-tray{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border:1.5px dashed #999;border-radius:8px;background:#fafafa;min-height:46px;margin-top:2px;}
+.tile{font-family:inherit;font-size:15px;background:#fff;border:1.5px solid #333;border-radius:7px;padding:6px 13px 6px 8px;cursor:grab;user-select:none;box-shadow:0 1px 0 #ccc;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;touch-action:none;}
+.tile.dragging{opacity:.4;}
+.tile.dragging.tile-ghost{position:fixed;opacity:.97;box-shadow:0 8px 20px rgba(0,0,0,.35);transform:scale(1.04);z-index:9999;pointer-events:none;cursor:grabbing;}
+.arrange-caret{display:inline-block;width:4px;flex-shrink:0;align-self:center;background:#3f8a83;border-radius:2px;}
+.tile:active{cursor:grabbing;}
+.num-badge{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#3f8a83;color:#fff;font-size:12px;font-weight:800;pointer-events:none;}
+.arrange-answer{display:none;font-size:14.5px;font-weight:700;color:#111;background:#f6f6f6;border:1px dashed #999;border-radius:6px;padding:6px 10px;margin-top:8px;}
+.ws.answer-mode .arrange-answer{display:block;}
+.correct-tag{display:none;font-size:12.5px;}
+.ws.answer-mode .correct-tag{display:inline-block;color:#127a4f;font-weight:700;margin-left:8px;}
+.grade-box{margin-top:22px;border:2px solid #3f8a83;border-radius:8px;padding:14px 16px;background:#f4fbfa;display:none;}
+.grade-box.show{display:block;}
+.grade-box h3{margin:0 0 8px;font-size:15px;color:#2f6f69;}
+.grade-json{white-space:pre-wrap;font-family:ui-monospace,Consolas,monospace;font-size:12px;background:#fff;border:1px solid #cde;border-radius:6px;padding:8px;max-height:260px;overflow:auto;}
+.mc-mark{font-weight:700;margin:0 3px 0 1px;}
+.mc-choices{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.mc-choices label{font-size:14px;cursor:pointer;display:flex;gap:7px;align-items:flex-start;}
+.ws-para{line-height:1.95;margin:8px 0;font-size:15px;}
+
+.score-banner{display:none;position:sticky;top:0;z-index:40;margin:0 0 18px;padding:12px 16px;border-radius:9px;border:2px solid #3f8a83;background:#f4fbfa;box-shadow:0 2px 6px rgba(0,0,0,.08);}
+.score-banner.show{display:block;}
+.score-banner.pass{border-color:#2f9e6b;background:#eafaf1;}
+.score-banner.fail{border-color:#d0555f;background:#fdeeef;}
+.score-banner .sb-main{font-size:16.5px;font-weight:800;color:#1c1c1c;}
+.score-banner .sb-sub{font-size:12.5px;color:#555;margin-top:3px;}
+.qgrade{display:none;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+.ws.answer-mode .qgrade.show{display:inline-block;}
+.qgrade.ok{background:#e3f7ee;color:#127a4f;border:1px solid #8fd9b6;}
+.qgrade.bad{background:#fdecee;color:#b23a48;border:1px solid #f3b7bd;}
+.qgrade.partial{background:#fff6e6;color:#a15c00;border:1px solid #f0d29a;}
+.qgrade.pending{background:#eef2f7;color:#555;border:1px solid #cfd8e3;}
+.gc-student-ans{display:block;width:70%;min-width:260px;margin-top:2px;padding:6px 9px;font-size:14.5px;color:#111;background:#f7fdfc;border:1px solid #666;border-radius:5px;white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;line-height:1.55;}
+.gc-student-ans.empty{color:#999;font-style:italic;}
+.gc-partial-reason{margin-top:6px;font-size:12.5px;color:#a15c00;background:#fff6e6;border:1px dashed #f0d29a;border-radius:6px;padding:6px 10px;line-height:1.5;white-space:pre-wrap;overflow-wrap:break-word;}
+
+/* ===== 재시험(오답만 다시 풀기) ===== */
+.retry-banner{display:none;margin:0 0 16px;padding:11px 15px;border:1.5px dashed #3f8a83;border-radius:8px;background:#eef6f5;font-size:13px;color:#2f6f69;line-height:1.6;}
+.ws.retry-mode .retry-banner{display:block;}
+[data-qid].q-locked{position:relative;opacity:.6;background:#f4f4f4;border-radius:6px;}
+[data-qid].q-locked input,[data-qid].q-locked select,[data-qid].q-locked textarea,[data-qid].q-locked .tile{pointer-events:none;}
+[data-qid].q-locked::after{content:attr(data-lock-label);position:absolute;top:-10px;right:8px;font-size:11px;font-weight:800;color:#2f6f69;background:#eafaf1;border:1px solid #8fd9b6;border-radius:999px;padding:2px 10px;white-space:nowrap;}
+[data-qid].q-retry-target{position:relative;box-shadow:0 0 0 2px #f0d29a inset;border-radius:6px;}
+[data-qid].q-retry-target::after{content:attr(data-retry-label);position:absolute;top:-10px;right:8px;font-size:11px;font-weight:800;color:#a15c00;background:#fff6e6;border:1px solid #f0d29a;border-radius:999px;padding:2px 10px;white-space:nowrap;}
+#bRetryWrong{display:none;}
+#bRetryWrong.show{display:inline-block;}
+
+@media print{
+  .retry-banner{display:none;}
+  .toolbar{display:none;}
+  body{background:#fff;}
+  .ws{border:none;margin:0;max-width:none;padding:14mm 14mm 10mm;}
+  .task-block{page-break-inside:avoid;}
+  .s-wrap{page-break-inside:avoid;}
+  .score-banner{position:static;box-shadow:none;}
+}
+body{font-size:15px;-webkit-text-size-adjust:100%;}
+.ws{max-width:640px;margin:0 auto;padding:18px 16px 70px;border:none;}
+.ws h1{font-size:18px;}
+.ws .meta{font-size:13px;}
+.ws .namebar{flex-wrap:wrap;gap:10px 20px;}
+.ws-input{font-size:16px;padding:9px 10px;min-width:0;}
+.ws-input.wide{width:100%;box-sizing:border-box;}
+.ws-select{font-size:16px;padding:9px 10px;}
+textarea.ws-input{width:100%;box-sizing:border-box;font-family:inherit;resize:vertical;}
+.task-block{margin-top:20px;padding-top:12px;}
+.task-title{font-size:15px;}
+.tile{font-size:16px;padding:9px 15px 9px 10px;}
+.arrange-tray{padding:10px;}
+.ph-num-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+.ph-num-row label{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border:2px solid #333;border-radius:50%;font-size:18px;font-weight:800;cursor:pointer;background:#fff;user-select:none;}
+.ph-num-row input{position:absolute;opacity:0;width:0;height:0;}
+.ph-num-row label:has(input:checked){background:#3f8a83;color:#fff;border-color:#3f8a83;}
+.toolbar button{flex:1;min-width:100px;}
+
+</style>
+</head>
+<body>
+<div class="toolbar"><button id="bSubmit" onclick="submitTest()">✅ 제출</button><button id="bRetryWrong" onclick="startRetryMode()">🎯 오답만 재시험</button><button id="bRetry" class="active" onclick="retryTest()">🔁 초기화</button></div>
+<div class="ws" id="wsRoot">
+<div class="retry-banner" id="retryBanner"></div>
+<div class="score-banner" id="scoreBanner"><div class="sb-main" id="sbMain"></div><div class="sb-sub" id="sbSub"></div></div>
+<h1>📱 답안 입력 — 2026학년도 2학기 1차 지필평가 1학년 영어과</h1>
+<div class="meta">시험 제목: <b>2026학년도 2학기 1차 지필평가 1학년 영어과</b> · 학년: <b>M1</b></div>
+<div class="namebar"><span>이름: <input type="text" class="ws-input" data-role="studentName" style="min-width:150px;" placeholder="이름을 입력"></span><span>학년: <select class="ws-select" data-role="grade"><option value="">선택</option><option>고3</option><option>고2</option><option>고1</option><option>중3</option><option>중2</option><option>중1</option></select></span></div>
+<div class="task-instr" style="margin-bottom:14px;">📄 <b>종이 문제지를 먼저 다 푼 뒤</b>, 문제 번호를 확인하며 <b>정답만</b> 아래에 입력하세요.</div>
+<div class="q-row" data-qid="q001" data-qtype="choice" data-points="3" data-answer="2"><div class="q-label"><span class="qtag">문제1</span>다음 대화의 빈칸에 이어질 순서로 가장 알맞은 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q001" data-role="choice" value="1">1</label><label><input type="radio" name="q001" data-role="choice" value="2">2</label><label><input type="radio" name="q001" data-role="choice" value="3">3</label><label><input type="radio" name="q001" data-role="choice" value="4">4</label><label><input type="radio" name="q001" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 2번</div></div><div class="q-row" data-qid="q002" data-qtype="choice" data-points="3" data-answer="3"><div class="q-label"><span class="qtag">문제2</span>다음 대화의 내용과 일치하는 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q002" data-role="choice" value="1">1</label><label><input type="radio" name="q002" data-role="choice" value="2">2</label><label><input type="radio" name="q002" data-role="choice" value="3">3</label><label><input type="radio" name="q002" data-role="choice" value="4">4</label><label><input type="radio" name="q002" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 3번</div></div><div class="q-row" data-qid="q003" data-qtype="choice" data-points="3" data-answer="4"><div class="q-label"><span class="qtag">문제3</span>다음 대화에서 Tom의 마지막 말에 대한 Mina의 응답으로 가장 알맞은 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q003" data-role="choice" value="1">1</label><label><input type="radio" name="q003" data-role="choice" value="2">2</label><label><input type="radio" name="q003" data-role="choice" value="3">3</label><label><input type="radio" name="q003" data-role="choice" value="4">4</label><label><input type="radio" name="q003" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 4번</div></div><div class="q-row" data-qid="q004" data-qtype="choice" data-points="3" data-answer="5"><div class="q-label"><span class="qtag">문제4</span>다음 대화의 내용을 요약한 글이다. 빈칸 (A), (B), (C)에 들어갈 말로 가장 알맞은 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q004" data-role="choice" value="1">1</label><label><input type="radio" name="q004" data-role="choice" value="2">2</label><label><input type="radio" name="q004" data-role="choice" value="3">3</label><label><input type="radio" name="q004" data-role="choice" value="4">4</label><label><input type="radio" name="q004" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 5번</div></div><div class="q-row" data-qid="q005" data-qtype="choice" data-points="2" data-answer="4"><div class="q-label"><span class="qtag">문제5</span>다음 대화의 흐름으로 보아, 주어진 문장이 들어가기에 가장 알맞은 곳은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q005" data-role="choice" value="1">1</label><label><input type="radio" name="q005" data-role="choice" value="2">2</label><label><input type="radio" name="q005" data-role="choice" value="3">3</label><label><input type="radio" name="q005" data-role="choice" value="4">4</label><label><input type="radio" name="q005" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 4번</div></div><div class="q-row" data-qid="q006" data-qtype="choice" data-points="2" data-answer="2"><div class="q-label"><span class="qtag">문제6</span>다음 대화의 요지로 가장 적절한 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q006" data-role="choice" value="1">1</label><label><input type="radio" name="q006" data-role="choice" value="2">2</label><label><input type="radio" name="q006" data-role="choice" value="3">3</label><label><input type="radio" name="q006" data-role="choice" value="4">4</label><label><input type="radio" name="q006" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 2번</div></div><div class="q-row" data-qid="q007" data-qtype="choice" data-points="2" data-answer="3"><div class="q-label"><span class="qtag">문제7</span>다음 대화 속 한 장면을 나타낸 그림을 보고, 그림 속 남학생이 할 말로 가장 알맞은 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q007" data-role="choice" value="1">1</label><label><input type="radio" name="q007" data-role="choice" value="2">2</label><label><input type="radio" name="q007" data-role="choice" value="3">3</label><label><input type="radio" name="q007" data-role="choice" value="4">4</label><label><input type="radio" name="q007" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 3번</div></div><div class="q-row" data-qid="q008" data-qtype="choice" data-points="4" data-answer="1"><div class="q-label"><span class="qtag">문제8</span>다음 글의 밑줄 친 ①~⑤ 중 어법상 틀린 문장은? [4점]<span class="pts">4점</span></div><div class="ph-num-row"><label><input type="radio" name="q008" data-role="choice" value="1">1</label><label><input type="radio" name="q008" data-role="choice" value="2">2</label><label><input type="radio" name="q008" data-role="choice" value="3">3</label><label><input type="radio" name="q008" data-role="choice" value="4">4</label><label><input type="radio" name="q008" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 1번</div></div><div class="q-row" data-qid="q009" data-qtype="choice" data-points="4" data-answer="5"><div class="q-label"><span class="qtag">문제9</span>윗글의 밑줄 친 (A)와 쓰임이 같은 것은? [4점]<span class="pts">4점</span></div><div class="ph-num-row"><label><input type="radio" name="q009" data-role="choice" value="1">1</label><label><input type="radio" name="q009" data-role="choice" value="2">2</label><label><input type="radio" name="q009" data-role="choice" value="3">3</label><label><input type="radio" name="q009" data-role="choice" value="4">4</label><label><input type="radio" name="q009" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 5번</div></div><div class="q-row" data-qid="q010" data-qtype="choice" data-points="2" data-answer="1"><div class="q-label"><span class="qtag">문제10</span>밑줄 친 대명사가 가리키는 대상이 나머지 넷과 다른 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q010" data-role="choice" value="1">1</label><label><input type="radio" name="q010" data-role="choice" value="2">2</label><label><input type="radio" name="q010" data-role="choice" value="3">3</label><label><input type="radio" name="q010" data-role="choice" value="4">4</label><label><input type="radio" name="q010" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 1번</div></div><div class="q-row" data-qid="q011" data-qtype="choice" data-points="3" data-answer="4"><div class="q-label"><span class="qtag">문제11</span>밑줄 친 turned into a cactus가 의미하는 바로 가장 적절한 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q011" data-role="choice" value="1">1</label><label><input type="radio" name="q011" data-role="choice" value="2">2</label><label><input type="radio" name="q011" data-role="choice" value="3">3</label><label><input type="radio" name="q011" data-role="choice" value="4">4</label><label><input type="radio" name="q011" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 4번</div></div><div class="q-row" data-qid="q012" data-qtype="choice" data-points="3" data-answer="2"><div class="q-label"><span class="qtag">문제12</span>글의 흐름으로 보아, 주어진 문장이 들어가기에 가장 알맞은 곳은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q012" data-role="choice" value="1">1</label><label><input type="radio" name="q012" data-role="choice" value="2">2</label><label><input type="radio" name="q012" data-role="choice" value="3">3</label><label><input type="radio" name="q012" data-role="choice" value="4">4</label><label><input type="radio" name="q012" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 2번</div></div><div class="q-row" data-qid="q013" data-qtype="choice" data-points="3" data-answer="1"><div class="q-label"><span class="qtag">문제13</span>윗글을 읽고 답할 수 없는 질문은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q013" data-role="choice" value="1">1</label><label><input type="radio" name="q013" data-role="choice" value="2">2</label><label><input type="radio" name="q013" data-role="choice" value="3">3</label><label><input type="radio" name="q013" data-role="choice" value="4">4</label><label><input type="radio" name="q013" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 1번</div></div><div class="q-row" data-qid="q014" data-qtype="choice" data-points="2" data-answer="3"><div class="q-label"><span class="qtag">문제14</span>글의 전체 흐름과 관계 없는 문장은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q014" data-role="choice" value="1">1</label><label><input type="radio" name="q014" data-role="choice" value="2">2</label><label><input type="radio" name="q014" data-role="choice" value="3">3</label><label><input type="radio" name="q014" data-role="choice" value="4">4</label><label><input type="radio" name="q014" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 3번</div></div><div class="q-row" data-qid="q015" data-qtype="choice" data-points="2" data-answer="2"><div class="q-label"><span class="qtag">문제15</span>빈칸 (A), (B)에 들어갈 말로 가장 알맞은 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q015" data-role="choice" value="1">1</label><label><input type="radio" name="q015" data-role="choice" value="2">2</label><label><input type="radio" name="q015" data-role="choice" value="3">3</label><label><input type="radio" name="q015" data-role="choice" value="4">4</label><label><input type="radio" name="q015" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 2번</div></div><div class="q-row" data-qid="q016" data-qtype="choice" data-points="3" data-answer="4"><div class="q-label"><span class="qtag">문제16</span>윗글의 주제로 가장 적절한 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q016" data-role="choice" value="1">1</label><label><input type="radio" name="q016" data-role="choice" value="2">2</label><label><input type="radio" name="q016" data-role="choice" value="3">3</label><label><input type="radio" name="q016" data-role="choice" value="4">4</label><label><input type="radio" name="q016" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 4번</div></div><div class="q-row" data-qid="q017" data-qtype="choice" data-points="3" data-answer="4"><div class="q-label"><span class="qtag">문제17</span>빈칸에 들어갈 말로 가장 적절한 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q017" data-role="choice" value="1">1</label><label><input type="radio" name="q017" data-role="choice" value="2">2</label><label><input type="radio" name="q017" data-role="choice" value="3">3</label><label><input type="radio" name="q017" data-role="choice" value="4">4</label><label><input type="radio" name="q017" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 4번</div></div><div class="q-row" data-qid="q018" data-qtype="choice" data-points="4" data-answer="5"><div class="q-label"><span class="qtag">문제18</span>윗글을 읽고 답할 수 있는 질문을 〈보기〉에서 있는 대로 고른 것은? [4점]<span class="pts">4점</span></div><div class="ph-num-row"><label><input type="radio" name="q018" data-role="choice" value="1">1</label><label><input type="radio" name="q018" data-role="choice" value="2">2</label><label><input type="radio" name="q018" data-role="choice" value="3">3</label><label><input type="radio" name="q018" data-role="choice" value="4">4</label><label><input type="radio" name="q018" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 5번</div></div><div class="q-row" data-qid="q019" data-qtype="choice" data-points="4" data-answer="1"><div class="q-label"><span class="qtag">문제19</span>윗글을 읽고 학생들이 쓴 메모이다. 바르게 이해한 학생끼리 짝지은 것은? [4점]<span class="pts">4점</span></div><div class="ph-num-row"><label><input type="radio" name="q019" data-role="choice" value="1">1</label><label><input type="radio" name="q019" data-role="choice" value="2">2</label><label><input type="radio" name="q019" data-role="choice" value="3">3</label><label><input type="radio" name="q019" data-role="choice" value="4">4</label><label><input type="radio" name="q019" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 1번</div></div><div class="q-row" data-qid="q020" data-qtype="choice" data-points="3" data-answer="2"><div class="q-label"><span class="qtag">문제20</span>윗글을 한 문장으로 요약할 때 빈칸에 들어갈 말로 알맞은 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q020" data-role="choice" value="1">1</label><label><input type="radio" name="q020" data-role="choice" value="2">2</label><label><input type="radio" name="q020" data-role="choice" value="3">3</label><label><input type="radio" name="q020" data-role="choice" value="4">4</label><label><input type="radio" name="q020" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 2번</div></div><div class="q-row" data-qid="q021" data-qtype="choice" data-points="3" data-answer="3"><div class="q-label"><span class="qtag">문제21</span>윗글의 요약문의 빈칸 (A), (B)에 들어갈 말로 알맞은 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q021" data-role="choice" value="1">1</label><label><input type="radio" name="q021" data-role="choice" value="2">2</label><label><input type="radio" name="q021" data-role="choice" value="3">3</label><label><input type="radio" name="q021" data-role="choice" value="4">4</label><label><input type="radio" name="q021" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 3번</div></div><div class="q-row" data-qid="q022" data-qtype="choice" data-points="3" data-answer="4"><div class="q-label"><span class="qtag">문제22</span>윗글의 제목으로 가장 적절한 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q022" data-role="choice" value="1">1</label><label><input type="radio" name="q022" data-role="choice" value="2">2</label><label><input type="radio" name="q022" data-role="choice" value="3">3</label><label><input type="radio" name="q022" data-role="choice" value="4">4</label><label><input type="radio" name="q022" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 4번</div></div><div class="q-row" data-qid="q023" data-qtype="choice" data-points="3" data-answer="1"><div class="q-label"><span class="qtag">문제23</span>윗글의 내용과 일치하는 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q023" data-role="choice" value="1">1</label><label><input type="radio" name="q023" data-role="choice" value="2">2</label><label><input type="radio" name="q023" data-role="choice" value="3">3</label><label><input type="radio" name="q023" data-role="choice" value="4">4</label><label><input type="radio" name="q023" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 1번</div></div><div class="q-row" data-qid="q024" data-qtype="choice" data-points="2" data-answer="5"><div class="q-label"><span class="qtag">문제24</span>밑줄 친 단어의 영영풀이가 알맞지 않은 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q024" data-role="choice" value="1">1</label><label><input type="radio" name="q024" data-role="choice" value="2">2</label><label><input type="radio" name="q024" data-role="choice" value="3">3</label><label><input type="radio" name="q024" data-role="choice" value="4">4</label><label><input type="radio" name="q024" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 5번</div></div><div class="q-row" data-qid="q025" data-qtype="choice" data-points="3" data-answer="5"><div class="q-label"><span class="qtag">문제25</span>주어진 글 다음에 이어질 순서로 가장 알맞은 것은? [3점]<span class="pts">3점</span></div><div class="ph-num-row"><label><input type="radio" name="q025" data-role="choice" value="1">1</label><label><input type="radio" name="q025" data-role="choice" value="2">2</label><label><input type="radio" name="q025" data-role="choice" value="3">3</label><label><input type="radio" name="q025" data-role="choice" value="4">4</label><label><input type="radio" name="q025" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 5번</div></div><div class="q-row" data-qid="q026" data-qtype="choice" data-points="2" data-answer="2"><div class="q-label"><span class="qtag">문제26</span>윗글의 내용과 일치하지 않는 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q026" data-role="choice" value="1">1</label><label><input type="radio" name="q026" data-role="choice" value="2">2</label><label><input type="radio" name="q026" data-role="choice" value="3">3</label><label><input type="radio" name="q026" data-role="choice" value="4">4</label><label><input type="radio" name="q026" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 2번</div></div><div class="q-row" data-qid="q027" data-qtype="choice" data-points="2" data-answer="1"><div class="q-label"><span class="qtag">문제27</span>윗글을 쓴 목적으로 가장 적절한 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q027" data-role="choice" value="1">1</label><label><input type="radio" name="q027" data-role="choice" value="2">2</label><label><input type="radio" name="q027" data-role="choice" value="3">3</label><label><input type="radio" name="q027" data-role="choice" value="4">4</label><label><input type="radio" name="q027" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 1번</div></div><div class="q-row" data-qid="q028" data-qtype="choice" data-points="2" data-answer="4"><div class="q-label"><span class="qtag">문제28</span>다음은 윗글의 한 장면을 나타낸 그림이다. 그림에 해당하는 표현으로 가장 알맞은 것은? [2점]<span class="pts">2점</span></div><div class="ph-num-row"><label><input type="radio" name="q028" data-role="choice" value="1">1</label><label><input type="radio" name="q028" data-role="choice" value="2">2</label><label><input type="radio" name="q028" data-role="choice" value="3">3</label><label><input type="radio" name="q028" data-role="choice" value="4">4</label><label><input type="radio" name="q028" data-role="choice" value="5">5</label></div><div class="ans" style="margin-top:6px;">정답 ▸ 4번</div></div><div class="q-row" data-qid="q029" data-qtype="interp" data-points="4" data-answer="He picked flowers to give them to the girl."><div class="q-label"><span class="qtag">문제29</span>다음 그림을 보고, 〈조건〉에 맞게 그림 속 소년이 한 일과 그 목적을 영어로 쓰시오. [4점]<span class="pts">4점</span></div><input type="text" class="ws-input wide" placeholder="답을 입력하세요" data-role="answer"><div class="ans" style="margin-top:4px;">정답 ▸ He picked flowers to give them to the girl.</div></div><div class="q-row" data-qid="q030" data-qtype="interp" data-points="3" data-answer="We can find mold in the bathroom."><div class="q-label"><span class="qtag">문제30</span>다음 대화에서 Mina가 설명한 내용을 바탕으로, 〈조건〉에 맞게 집 안에서 곰팡이를 찾을 수 있는 장소를 한 문장으로 쓰시오. [3점]<span class="pts">3점</span></div><input type="text" class="ws-input wide" placeholder="답을 입력하세요" data-role="answer"><div class="ans" style="margin-top:4px;">정답 ▸ We can find mold in the bathroom.</div></div><div class="q-row" data-qid="q031" data-qtype="interp" data-points="3" data-answer="(A) food  (B) medicine"><div class="q-label"><span class="qtag">문제31</span>윗글의 내용을 요약할 때 (A), (B)에 들어갈 말을 각각 첫 글자를 포함하여 한 단어의 영어로 쓰시오. [3점]<span class="pts">3점</span></div><input type="text" class="ws-input wide" placeholder="답을 입력하세요" data-role="answer"><div class="ans" style="margin-top:4px;">정답 ▸ (A) food  (B) medicine</div></div><div class="q-row" data-qid="q032" data-qtype="interp" data-points="3" data-answer="The gods were angry, so the volcanoes could not move anymore."><div class="q-label"><span class="qtag">문제32</span>다음 글의 내용을 바탕으로, 〈보기〉의 단어를 모두 활용하여 우리말에 맞게 영작하시오. [3점]<span class="pts">3점</span></div><input type="text" class="ws-input wide" placeholder="답을 입력하세요" data-role="answer"><div class="ans" style="margin-top:4px;">정답 ▸ The gods were angry, so the volcanoes could not move anymore.</div></div><div class="q-row" data-qid="q033" data-qtype="interp" data-points="3" data-answer="The boy and the girl ran away to the mountains together."><div class="q-label"><span class="qtag">문제33</span>다음 우리말과 일치하도록 주어진 단어를 바르게 배열하여 문장을 완성하시오. [3점]<span class="pts">3점</span></div><input type="text" class="ws-input wide" placeholder="답을 입력하세요" data-role="answer"><div class="ans" style="margin-top:4px;">정답 ▸ The boy and the girl ran away to the mountains together.</div></div><div class="q-row" data-qid="q034" data-qtype="interp" data-points="3" data-answer="The Egyptians used yeast to make better bread."><div class="q-label"><span class="qtag">문제34</span>다음 글의 내용을 바탕으로, 〈보기〉의 단어를 모두 활용하여 우리말에 맞게 영작하시오. [3점]<span class="pts">3점</span></div><input type="text" class="ws-input wide" placeholder="답을 입력하세요" data-role="answer"><div class="ans" style="margin-top:4px;">정답 ▸ The Egyptians used yeast to make better bread.</div></div><div class="q-row" data-qid="q035" data-qtype="interp" data-points="3" data-answer="Tunupa's tears ran over the land."><div class="q-label"><span class="qtag">문제35</span>다음 우리말과 일치하도록 주어진 단어를 바르게 배열하여 문장을 완성하시오. [3점]<span class="pts">3점</span></div><input type="text" class="ws-input wide" placeholder="답을 입력하세요" data-role="answer"><div class="ans" style="margin-top:4px;">정답 ▸ Tunupa's tears ran over the land.</div></div><div class="grade-box" id="gradeBox"><h3>📊 채점 결과</h3><div id="gradeBody"></div></div>
+<div class="footnote">이 답안지는 mid_json 문제지의 폰 전용 답안 입력본입니다.</div>
+</div>
+<script>window.WS_CONFIG={"testName":"2026학년도 2학기 1차 지필평가 1학년 영어과_midJson","level":"mid_json","threshold":80,"endpoint":"https://script.google.com/macros/s/AKfycbxHb25T0B2rBRvTMo4kF2hDHy0WlQSYOpLTDi2yUYoU7QPv3VotIjcKdGus6IDQckxs8w/exec"};</script>
+<script>
+(function(){
+window.__WS_START=new Date();
+window.__WS_LOCKED={};
+function refresh(){ if(typeof _wsRefreshRetryButton==='function') _wsRefreshRetryButton(); }
+var nm=document.querySelector('[data-role=studentName]');
+if(nm){ nm.addEventListener('input',refresh); nm.addEventListener('change',refresh); }
+refresh();
+/* 스크롤 중 모바일 브라우저의 "당겨서 새로고침" 등으로 페이지가 리로드돼도 직전까지
+   작성 중이던 답안이 사라지지 않도록, 입력할 때마다 이 브라우저에만 임시 저장해 둔다. */
+if(typeof _wsRestoreDraft==='function') _wsRestoreDraft();
+document.addEventListener('input', function(e){ if(e.target.closest('#wsRoot') && typeof _wsQueueSaveDraft==='function') _wsQueueSaveDraft(); });
+document.addEventListener('change', function(e){ if(e.target.closest('#wsRoot') && typeof _wsQueueSaveDraft==='function') _wsQueueSaveDraft(); });
+window.addEventListener('pagehide', function(){ if(typeof _wsSaveDraft==='function') _wsSaveDraft(); });
+document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='hidden' && typeof _wsSaveDraft==='function') _wsSaveDraft(); });
+})();
+function wsHint(btn){var k=btn.parentNode.querySelector('.hint-ko');if(k)k.classList.toggle('show');}
+function advSyncGFix(el){var row=el.closest('[data-qtype="interp"]');if(!row)return;var w=row.querySelector('[data-role=gfixWrong]');var c=row.querySelector('[data-role=gfixCorrect]');var hidden=row.querySelector('input[type=hidden][data-role=answer]');if(hidden)hidden.value=(w?w.value.trim():'')+' → '+(c?c.value.trim():'');}
+function _setReveal(on){var r=document.getElementById('wsRoot');r.classList.toggle('answer-mode',on);var s=document.getElementById('bSubmit'),t=document.getElementById('bRetry');if(s){s.classList.toggle('active',on);s.disabled=on;}if(t)t.classList.toggle('active',!on);}
+function _renumberTray(tray){[].slice.call(tray.querySelectorAll('.tile')).forEach(function(t,i){var b=t.querySelector('.num-badge');if(b)b.textContent=(i+1);});}
+(function(){
+var dragEl=null, tray=null, startX=0, startY=0, moved=false, pid=null;
+var ghostOffsetX=0, ghostOffsetY=0, ghostW=0, ghostH=0, caret=null;
+/* (업그레이드 2단계)
+   1단계 수정(2D 거리 비교)만으로는 부족했던 근본 원인: 드래그 중인 타일을 그 자리에 그대로
+   둔 채(투명도만 낮춰) flex 레이아웃 계산에 계속 참여시키고 있었다. 그래서 매 pointermove마다
+   "그 타일 자신의 너비"가 줄바꿈·이웃 타일 위치에 영향을 주고, 그 변화가 다시 다음 판정에
+   영향을 주는 피드백 루프가 생겨 — 폭이 넓은 타일일수록(예: "the analog hobby") 목표 지점
+   근처에서 튕기거나(자리를 못 잡음), 짧은 타일(예: "revival") 왼쪽으로 넣으려 해도 그 순간
+   줄바꿈이 다시 계산되며 제자리로 돌아가는 문제가 있었다.
+   해결: 드래그 시작 시 실제 타일을 트레이(flex 레이아웃)에서 완전히 분리해 document.body에
+   position:fixed 로 띄운 "고스트"로 만든다 — 남은 타일들은 그 순간 한 번만 재배치되고, 이후
+   드래그 내내 완전히 고정된다(더 이상 드래그 중인 타일의 폭이 판정에 영향을 주지 않음).
+   목표 위치는 남은(고정된) 타일만 보고 "줄(row) 우선"으로 계산한다: 손끝의 y좌표로 어느 줄인지
+   먼저 찾고, 그 줄 안에서 x좌표로 삽입 지점을 정한다 — 가는 삽입선(caret)으로 미리 보여준다.
+   드롭 시점에 그 위치로 실제 타일을 되돌려 넣는다. */
+function rowsOf(tr){
+  var els=[].slice.call(tr.querySelectorAll('.tile:not(.dragging)'));
+  var rows=[];
+  els.forEach(function(el){
+    var b=el.getBoundingClientRect();
+    var row=null;
+    for(var i=0;i<rows.length;i++){ if(Math.abs(rows[i].top-b.top)<4){row=rows[i];break;} }
+    if(!row){row={top:b.top,bottom:b.bottom,items:[]};rows.push(row);}
+    row.bottom=Math.max(row.bottom,b.bottom);
+    row.items.push({el:el,rect:b});
+  });
+  rows.forEach(function(r){r.items.sort(function(a,b){return a.rect.left-b.rect.left;});});
+  rows.sort(function(a,b){return a.top-b.top;});
+  return rows;
+}
+function insertionRef(tr,x,y){
+  var rows=rowsOf(tr);
+  if(!rows.length)return null; // 트레이가 비었으면 맨 끝(=시작)에 삽입
+  var row=rows[rows.length-1];
+  for(var i=0;i<rows.length;i++){ if(y<rows[i].bottom){row=rows[i];break;} }
+  var items=row.items;
+  for(var k=0;k<items.length;k++){
+    if(x < items[k].rect.left+items[k].rect.width/2) return items[k].el;
+  }
+  var last=items[items.length-1];
+  return last?last.el.nextElementSibling:null;
+}
+document.addEventListener('pointerdown',function(e){
+  var t=e.target.closest&&e.target.closest('.tile');
+  if(!t)return;
+  if(t.closest('.q-locked'))return; // 재시험 잠금 문항은 드래그 비활성
+  var tr=t.closest('.arrange-tray');
+  if(!tr)return;
+  dragEl=t;tray=tr;moved=false;startX=e.clientX;startY=e.clientY;pid=e.pointerId;
+  try{t.setPointerCapture(e.pointerId);}catch(_){}
+});
+document.addEventListener('pointermove',function(e){
+  if(!dragEl||e.pointerId!==pid)return;
+  if(!moved&&(Math.abs(e.clientX-startX)>4||Math.abs(e.clientY-startY)>4)){
+    moved=true;
+    var r=dragEl.getBoundingClientRect();
+    ghostW=r.width;ghostH=r.height;
+    ghostOffsetX=startX-r.left;ghostOffsetY=startY-r.top;
+    dragEl.style.width=ghostW+'px';dragEl.style.height=ghostH+'px';
+    dragEl.style.left=r.left+'px';dragEl.style.top=r.top+'px';
+    document.body.appendChild(dragEl);
+    dragEl.classList.add('dragging','tile-ghost');
+    caret=document.createElement('span');
+    caret.className='arrange-caret';
+    caret.style.height=ghostH+'px';
+    tray.appendChild(caret);
+  }
+  if(!moved)return;
+  e.preventDefault();
+  dragEl.style.left=(e.clientX-ghostOffsetX)+'px';
+  dragEl.style.top=(e.clientY-ghostOffsetY)+'px';
+  var ref=insertionRef(tray,e.clientX,e.clientY);
+  if(caret.nextSibling!==ref){ if(ref==null)tray.appendChild(caret);else tray.insertBefore(caret,ref); }
+},{passive:false});
+function endDrag(e){
+  if(!dragEl||(e&&e.pointerId!==pid))return;
+  if(moved){
+    dragEl.classList.remove('dragging','tile-ghost');
+    dragEl.style.position='';dragEl.style.left='';dragEl.style.top='';
+    dragEl.style.width='';dragEl.style.height='';
+    if(caret&&caret.parentNode){ caret.parentNode.insertBefore(dragEl,caret); }
+    else if(tray){ tray.appendChild(dragEl); } // 안전망: caret이 사라진 예외 상황에도 타일이 허공에 남지 않도록 트레이 끝에 복귀
+    if(tray)_renumberTray(tray);
+    if(typeof _wsQueueSaveDraft==='function')_wsQueueSaveDraft();
+  }
+  if(caret&&caret.parentNode)caret.parentNode.removeChild(caret);
+}
+document.addEventListener('pointerup',endDrag);
+document.addEventListener('pointercancel',endDrag);
+})();
+function _p2(n){return(n<10?'0':'')+n;}
+function _fmtRange(a,b){function dd(x){return x.getFullYear()+'-'+_p2(x.getMonth()+1)+'-'+_p2(x.getDate());}function tt(x){return _p2(x.getHours())+':'+_p2(x.getMinutes());}var ds=dd(a),de=dd(b);return ds===de?(ds+' '+tt(a)+'~'+tt(b)):(ds+' '+tt(a)+'~'+de+' '+tt(b));}
+function _collect(){var locked=window.__WS_LOCKED||{};var rows=[].slice.call(document.querySelectorAll('[data-qid]')).filter(function(r){return !locked[r.getAttribute('data-qid')];});var out=[];var objEarned=0,objMax=0,subjMax=0,subjCount=0;
+rows.forEach(function(r){var qid=r.getAttribute('data-qid');var type=r.getAttribute('data-qtype');var pts=+(r.getAttribute('data-points')||0);var rec={qid:qid,type:type,max:pts};
+if(type==='interp'){var i=r.querySelector('[data-role=answer]');rec.student=i?i.value.trim():'';rec.answer=r.getAttribute('data-answer')||'';rec.autoGraded=false;var hraw=r.getAttribute('data-hints');if(hraw){try{rec.hints=JSON.parse(hraw);}catch(_){rec.hints=hraw.split(',').map(function(x){return x.trim();}).filter(Boolean);}}subjMax+=pts;subjCount++;}
+else if(type==='arrange'){var toks=[].slice.call(r.querySelectorAll('.tile')).map(function(t){return t.getAttribute('data-tok');});rec.student=toks.join(' | ');rec.answer=r.getAttribute('data-answer')||'';rec.autoGraded=true;rec.correct=(rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='match'){var m=r.querySelector('[data-role=match]');rec.student=m?m.value:'';rec.answer=r.getAttribute('data-answer-match')||'';rec.autoGraded=true;rec.correct=(rec.student!==''&&rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='topic-num'){var s=r.querySelector('[data-role=answer]');rec.student=s?s.value:'';rec.answer=r.getAttribute('data-answer');rec.answerAlt=r.getAttribute('data-answer-alt')||null;rec.autoGraded=true;var ap=+(r.getAttribute('data-points-alt')||0);if(rec.student===rec.answer){rec.awarded=pts;rec.correct=true;}else if(rec.answerAlt&&rec.student===rec.answerAlt){rec.awarded=ap;rec.correct='alt';}else{rec.awarded=0;rec.correct=false;}objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='choice'){var sc=r.querySelector('[data-role=choice]:checked');rec.student=sc?sc.value:'';rec.answer=r.getAttribute('data-answer')||'';rec.autoGraded=true;rec.correct=(rec.student!==''&&rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='multichoice'){var ck=[].slice.call(r.querySelectorAll('[data-role=mc]:checked')).map(function(x){return x.value;});rec.student=ck.slice().sort().join(',');rec.answer=(r.getAttribute('data-answer')||'').split(',').map(function(x){return x.trim();}).filter(Boolean).sort().join(',');rec.autoGraded=true;rec.correct=(rec.student!==''&&rec.student===rec.answer);rec.awarded=rec.correct?pts:0;objEarned+=rec.awarded;objMax+=pts;}
+else if(type==='contentmatch'){var isMatch=(r.getAttribute('data-match')==='true');var wAns=(r.getAttribute('data-word')||'').trim().toLowerCase().replace(/[^a-z']/g,'');var cAns=(r.getAttribute('data-correct')||'').trim().toLowerCase().replace(/[^a-z']/g,'');var ox=r.querySelector('[data-role=cmchoice]:checked');var oxVal=ox?ox.value:'';var wi=r.querySelector('[data-role=cmword]');var wVal=(wi?wi.value:'').trim().toLowerCase().replace(/[^a-z']/g,'');var ci=r.querySelector('[data-role=cmcorrect]');var cVal=(ci?ci.value:'').trim().toLowerCase().replace(/[^a-z']/g,'');rec.student=oxVal+((wVal||cVal)?(' / '+wVal+' → '+cVal):'');rec.answer=(isMatch?'O':'X')+(isMatch?'':(' / '+wAns+' → '+cAns));var half=Math.round(pts*0.5);var awarded=0;if(isMatch){awarded=(oxVal==='O')?pts:0;}else{var judgeOk=(oxVal==='X');if(judgeOk)awarded+=half;if(judgeOk&&wVal&&cVal&&wVal===wAns&&cVal===cAns)awarded+=(pts-half);}rec.autoGraded=true;rec.correct=(awarded===pts);rec.awarded=awarded;objEarned+=awarded;objMax+=pts;}
+out.push(rec);});
+return {answers:out,objEarned:objEarned,objMax:objMax,subjMax:subjMax,subjCount:subjCount};}
+function _payload(){var d=_collect();var cfg=window.WS_CONFIG||{};var nm=document.querySelector('[data-role=studentName]');var gr=document.querySelector('[data-role=grade]');var end=new Date();var start=window.__WS_START||end;
+return {testName:cfg.testName||document.title,level:cfg.level||'',student:nm?nm.value.trim():'',grade:gr?gr.value:'',threshold:(cfg.threshold!=null?cfg.threshold:80),startedAt:start.toISOString(),submittedAt:end.toISOString(),timeRange:_fmtRange(start,end),objectiveEarned:d.objEarned,objectiveMax:d.objMax,subjectiveMax:d.subjMax,questions:d.answers};}
+function _banner(html){var box=document.getElementById('gradeBox');var body=document.getElementById('gradeBody');if(body)body.innerHTML=html;if(box){box.classList.add('show');box.scrollIntoView({behavior:'smooth',block:'nearest'});}}
+function _scoreBanner(mainHtml, subHtml, cls){var box=document.getElementById('scoreBanner');if(!box)return;var m=document.getElementById('sbMain'),s=document.getElementById('sbSub');if(m)m.innerHTML=mainHtml;if(s)s.innerHTML=subHtml||'';box.className='score-banner show'+(cls?(' '+cls):'');box.scrollIntoView({behavior:'smooth',block:'start'});}
+function _qHost(qid){return document.querySelector('[data-qid="'+String(qid).replace(/"/g,'')+'"]');}
+function _badgeCls(awarded,max){if(max<=0)return 'ok';if(awarded>=max)return 'ok';if(awarded<=0)return 'bad';return 'partial';}
+function _setBadge(qid,cls,text){var host=_qHost(qid);if(!host)return;var tag=host.querySelector('.qtag');if(!tag)return;var b=tag.parentNode.querySelector('.qgrade[data-for="'+String(qid).replace(/"/g,'')+'"]');if(!b){b=document.createElement('span');b.setAttribute('data-for',qid);tag.parentNode.insertBefore(b,tag.nextSibling);}b.className='qgrade show '+cls;b.textContent=text;}
+function _clearBadges(){[].slice.call(document.querySelectorAll('.qgrade')).forEach(function(b){b.parentNode.removeChild(b);});}
+function _markObjective(answers){answers.forEach(function(rec){if(rec.autoGraded===false)return;var cls=_badgeCls(rec.awarded,rec.max);var icon=cls==='ok'?' ✅':(cls==='bad'?' ❌':' ▲');_setBadge(rec.qid,cls,(rec.awarded||0)+'/'+rec.max+'점'+icon);});}
+function _markSubjectivePending(answers){answers.forEach(function(rec){if(rec.autoGraded!==false)return;if(!String(rec.student||'').trim()){_setBadge(rec.qid,'bad','0/'+rec.max+'점 ❌ (무응답)');}else{_setBadge(rec.qid,'pending','⏳ 채점중');}});}
+function _markSubjectiveResult(grades){(grades||[]).forEach(function(g){var max=Number(g.max)||0,awarded=Number(g.awarded)||0;if(g.note){_setBadge(g.qid,'bad','⚠ '+g.note);return;}var cls=_badgeCls(awarded,max);var icon=cls==='ok'?' ✅':(cls==='bad'?' ❌':' ▲');_setBadge(g.qid,cls,awarded+'/'+max+'점'+icon);});}
+/* ===== 재시험(오답·부분점수만 다시 풀기) =====
+   설계: 백엔드(Apps Script)는 수정하지 않는다 — 잠긴(만점) 문항은 _collect()가 애초에
+   payload(items)에서 제외하므로, 서버는 그때그때 "다시 푼 문항"만 받는 평소와 동일한 요청으로 본다.
+   전체 누적 결과(어떤 문항이 잠겼는지·이전 점수)는 이 브라우저의 localStorage에만 저장한다. */
+function _wsTotalMax(){var sum=0;[].slice.call(document.querySelectorAll('[data-qid]')).forEach(function(h){sum+=(+(h.getAttribute('data-points')||0));});return sum;}
+function _wsStoreKey(){var cfg=window.WS_CONFIG||{};var nm=document.querySelector('[data-role=studentName]');var name=(nm?nm.value.trim():'')||'(익명)';return 'wsRetry::'+(cfg.testName||document.title)+'::'+(cfg.level||'')+'::'+name;}
+function _wsLoadAttempt(){try{var raw=localStorage.getItem(_wsStoreKey());return raw?JSON.parse(raw):null;}catch(_){return null;}}
+function _wsSaveAttempt(rec){try{localStorage.setItem(_wsStoreKey(),JSON.stringify(rec));}catch(_){}}
+function _wsClearAttempt(){try{localStorage.removeItem(_wsStoreKey());}catch(_){}}
+/* ===== 답안 임시저장(자동저장) =====
+   위 wsRetry:: 는 "제출·채점 완료 기록"이고, 이건 "아직 제출 전, 풀고 있는 도중"의 답안이다.
+   이름 입력칸은 새로고침되면 같이 비어버리므로 이름이 아니라 testName+level로만 키를 잡는다
+   (한 기기·한 순간에는 보통 한 학생만 풀고 있다고 가정 — 임시저장이므로 이 정도로 충분하다). */
+function _wsDraftKey(){var cfg=window.WS_CONFIG||{};return 'wsDraft::'+(cfg.testName||document.title)+'::'+(cfg.level||'');}
+function _wsSaveDraft(){
+  try{
+    var wsRoot=document.getElementById('wsRoot');
+    if(wsRoot&&wsRoot.classList.contains('answer-mode'))return; // 이미 제출·정답공개된 화면은 저장하지 않음
+    var d=_collect();
+    var nm=document.querySelector('[data-role=studentName]');
+    var gr=document.querySelector('[data-role=grade]');
+    var rec={student:nm?nm.value:'',grade:gr?gr.value:'',
+      answers:d.answers.map(function(r){return {qid:r.qid,type:r.type,student:r.student};}),
+      updatedAt:new Date().toISOString()};
+    localStorage.setItem(_wsDraftKey(),JSON.stringify(rec));
+  }catch(_){}
+}
+var __wsDraftTimer=null;
+function _wsQueueSaveDraft(){ if(__wsDraftTimer)clearTimeout(__wsDraftTimer); __wsDraftTimer=setTimeout(_wsSaveDraft,400); }
+function _wsLoadDraft(){try{var raw=localStorage.getItem(_wsDraftKey());return raw?JSON.parse(raw):null;}catch(_){return null;}}
+function _wsClearDraft(){try{localStorage.removeItem(_wsDraftKey());}catch(_){}}
+function _wsRestoreDraft(){
+  var d=_wsLoadDraft();
+  if(!d||!d.answers||!d.answers.length)return;
+  var any=false;
+  d.answers.forEach(function(rec){ if(!rec.student)return; var host=_qHost(rec.qid); if(host){ _wsFillAnswer(host,rec.type,rec.student); any=true; } });
+  if(!any)return;
+  var nm=document.querySelector('[data-role=studentName]');if(nm&&d.student&&!nm.value)nm.value=d.student;
+  var gr=document.querySelector('[data-role=grade]');if(gr&&d.grade&&!gr.value)gr.value=d.grade;
+  _setRetryBanner('💾 스크롤 중 새로고침 등으로 페이지가 다시 열려, 직전까지 작성 중이던 답안을 복구했습니다. <a href="#" onclick="_setRetryBanner(\'\');return false;" style="color:#2f6f69;text-decoration:underline;">닫기</a>');
+}
+function _setRetryBanner(html){var b=document.getElementById('retryBanner');if(b)b.innerHTML=html||'';}
+// 이전 답안을 문항 타입에 맞게 화면에 다시 채워 넣는다 (재시험 대상 문항을 수정하기 쉽도록)
+function _wsFillAnswer(host,type,val){val=val||'';
+if(type==='interp'){var i=host.querySelector('[data-role=answer]');if(i)i.value=val;var gw=host.querySelector('[data-role=gfixWrong]'),gc=host.querySelector('[data-role=gfixCorrect]');if(gw||gc){var gp=val.split(' → ');if(gw)gw.value=(gp[0]||'').trim();if(gc)gc.value=(gp[1]||'').trim();}}
+else if(type==='arrange'){var tray=host.querySelector('.arrange-tray');if(!tray)return;var toks=val.split(' | ');var pool={};[].slice.call(tray.querySelectorAll('.tile')).forEach(function(t){var k=t.getAttribute('data-tok');(pool[k]=pool[k]||[]).push(t);});var ordered=[],ok=true;toks.forEach(function(k){var arr=pool[k];if(arr&&arr.length){ordered.push(arr.shift());}else{ok=false;}});if(ok&&ordered.length===tray.querySelectorAll('.tile').length){ordered.forEach(function(t){tray.appendChild(t);});_renumberTray(tray);}}
+else if(type==='match'){var m=host.querySelector('[data-role=match]');if(m)m.value=val;}
+else if(type==='topic-num'){var s=host.querySelector('[data-role=answer]');if(s)s.value=val;}
+else if(type==='choice'){[].slice.call(host.querySelectorAll('[data-role=choice]')).forEach(function(r){r.checked=(r.value===val);});}
+else if(type==='multichoice'){var vs=(val||'').split(',').map(function(x){return x.trim();}).filter(Boolean);[].slice.call(host.querySelectorAll('[data-role=mc]')).forEach(function(c){c.checked=vs.indexOf(c.value)>=0;});}
+else if(type==='contentmatch'){var parts=val.split(' / ');var ox=parts[0];[].slice.call(host.querySelectorAll('[data-role=cmchoice]')).forEach(function(r){r.checked=(r.value===ox);});if(parts[1]){var wc=parts[1].split(' → ');var wi=host.querySelector('[data-role=cmword]');if(wi)wi.value=(wc[0]||'').trim();var ci=host.querySelector('[data-role=cmcorrect]');if(ci)ci.value=(wc[1]||'').trim();}}}
+// 문항을 잠금(이전 만점 → 재채점 제외) 또는 재시험 대상(수정 가능)으로 표시
+function _wsSetLocked(host,locked,info){host.classList.toggle('q-locked',locked);host.classList.toggle('q-retry-target',!locked);
+if(locked){host.setAttribute('data-lock-label','🔒 '+(info?info.awarded:0)+'/'+(info?info.max:0)+'점 (이전 만점)');host.removeAttribute('data-retry-label');}
+else{host.removeAttribute('data-lock-label');var prev=(info&&!info.pending)?(' (이전 '+info.awarded+'/'+info.max+'점)'):'';host.setAttribute('data-retry-label','🎯 재시험 대상'+prev);}
+[].slice.call(host.querySelectorAll('input,select,textarea')).forEach(function(el){el.disabled=locked;});}
+// 이번 회차 채점 결과(grades)를 이전에 잠긴 문항(prevLocked)과 합쳐 누적 결과로 저장하고 총점을 반환
+function _wsSaveMergedAttempt(prevLocked,roundQuestions,grades){
+var items={};Object.keys(prevLocked||{}).forEach(function(qid){items[qid]=prevLocked[qid];});
+var gmap={};(grades||[]).forEach(function(g){gmap[g.qid]=g;});
+(roundQuestions||[]).forEach(function(rec){var awarded,pending=false,reason='';
+if(gmap[rec.qid]){awarded=Number(gmap[rec.qid].awarded)||0;reason=gmap[rec.qid].reason||'';}
+else if(rec.autoGraded){awarded=Number(rec.awarded)||0;}
+else{awarded=0;pending=true;} // 서술형인데 구글시트 미연결 → 판정 불가, 항상 재시험 대상으로 열어둠
+items[rec.qid]={max:rec.max,awarded:awarded,student:rec.student,reason:reason,pending:pending};});
+var totalMax=0,totalEarned=0,anyOpen=false;
+Object.keys(items).forEach(function(qid){var it=items[qid];totalMax+=Number(it.max)||0;var full=!it.pending&&it.max>0&&it.awarded>=it.max;if(full){totalEarned+=it.max;}else{totalEarned+=(Number(it.awarded)||0);anyOpen=true;}});
+_wsSaveAttempt({items:items,updatedAt:new Date().toISOString()});
+return {totalEarned:totalEarned,totalMax:totalMax,anyOpen:anyOpen};}
+function _wsRefreshRetryButton(){var btn=document.getElementById('bRetryWrong');if(!btn)return;var prev=_wsLoadAttempt();var anyOpen=false;
+if(prev&&prev.items){Object.keys(prev.items).forEach(function(qid){var it=prev.items[qid];var full=!it.pending&&it.max>0&&it.awarded>=it.max;if(!full)anyOpen=true;});}
+btn.classList.toggle('show',!!(prev&&anyOpen));}
+function startRetryMode(){var prev=_wsLoadAttempt();
+if(!prev||!prev.items){alert('이전 제출 기록을 찾을 수 없습니다. 이름을 이전 제출 때와 똑같이 입력했는지 확인해주세요.');return;}
+var items=prev.items;var lockedMap={},anyOpen=false;
+Object.keys(items).forEach(function(qid){var it=items[qid];var full=!it.pending&&it.max>0&&it.awarded>=it.max;if(full){lockedMap[qid]=it;}else{anyOpen=true;}});
+if(!anyOpen){alert('🎉 모든 문항이 이미 만점입니다! 재시험이 필요 없어요.');return;}
+window.__WS_LOCKED=lockedMap;
+_setReveal(false);
+var gb=document.getElementById('gradeBox');if(gb)gb.classList.remove('show');
+var sb=document.getElementById('scoreBanner');if(sb)sb.className='score-banner';
+_clearBadges();
+Object.keys(items).forEach(function(qid){var host=_qHost(qid);if(!host)return;var type=host.getAttribute('data-qtype');var it=items[qid];_wsFillAnswer(host,type,it.student||'');_wsSetLocked(host,!!lockedMap[qid],it);});
+var root=document.getElementById('wsRoot');if(root)root.classList.add('retry-mode');
+var btn=document.getElementById('bSubmit');if(btn){btn.textContent='✅ 재시험 제출';btn.disabled=false;btn.classList.remove('active');}
+var rw=document.getElementById('bRetryWrong');if(rw)rw.classList.remove('show');
+window.__WS_START=new Date();
+_setRetryBanner('🎯 <b>재시험 모드</b> — 🔒 표시된 문항은 이전에 만점을 받아 잠겼습니다(다시 채점하지 않습니다). 나머지 🎯 표시된 문항만 다시 풀고 아래 <b>재시험 제출</b> 버튼을 누르세요.');}
+function submitTest(){var wsRoot=document.getElementById('wsRoot');if(wsRoot&&wsRoot.classList.contains('answer-mode')){_banner('<div style="color:#b23a48;font-weight:700;">⚠ 이미 제출된 테스트입니다.</div><div style="font-size:13px;margin-top:4px;color:#555;">정답이 공개된 상태에서는 다시 제출할 수 없습니다. 위 🔁 전체 초기화 버튼을 눌러 처음부터 다시 풀거나, 🎯 오답만 재시험 버튼을 이용하세요.</div>');return;}
+var nmEl=document.querySelector('[data-role=studentName]');if(nmEl&&!nmEl.value.trim()){alert('이름을 입력해주세요. (이름으로 이전 결과를 저장해두었다가 재시험 때 불러옵니다)');return;}
+var locked=window.__WS_LOCKED||{};
+_setReveal(true);var p=_payload();var cfg=window.WS_CONFIG||{};var objPct=p.objectiveMax?Math.round(p.objectiveEarned/p.objectiveMax*100):0;var subjN=p.questions.filter(function(q){return q.autoGraded===false;}).length;
+_wsClearDraft();
+_markObjective(p.questions);_markSubjectivePending(p.questions);
+if(!cfg.endpoint){
+var merged=_wsSaveMergedAttempt(locked,p.questions,null);
+var pct=merged.totalMax?Math.round(merged.totalEarned/merged.totalMax*100):0;
+_scoreBanner('현재까지 자동 채점: '+merged.totalEarned+' / '+merged.totalMax+'점 ('+pct+'%)','서술형 '+subjN+'문항은 문항 옆에 공개된 정답과 비교해 확인하세요. (구글시트 URL을 연결하면 Gemini가 서술형까지 자동채점하고 재시험도 정확히 판정합니다.)'+(merged.anyOpen?' · 🎯 만점 못 받은 문항이 있으면 위 버튼으로 재시험할 수 있습니다.':' · 🎉 모든 문항 만점입니다!'));
+_wsRefreshRetryButton();return;}
+_scoreBanner('⏳ 채점 중…','서술형 AI 채점 · 시트 기록 중입니다.');
+fetch(cfg.endpoint,{method:'POST',body:JSON.stringify(p)}).then(function(r){return r.json();}).then(function(res){
+if(res&&res.ok){_markSubjectiveResult(res.grades);
+var merged=_wsSaveMergedAttempt(locked,p.questions,res.grades);
+var pct=merged.totalMax?Math.round(merged.totalEarned/merged.totalMax*100):0;
+var pass=pct>=p.threshold;
+var warn=res.warning?('<div style="font-size:12px;margin-top:4px;">⚠ '+res.warning+'</div>'):'';
+_scoreBanner((pass?'✅ 통과':'❌ 미통과')+' — '+merged.totalEarned+' / '+merged.totalMax+'점 ('+pct+'%)','기준 '+p.threshold+'% · 결과가 구글시트에 기록되었습니다.'+warn+(merged.anyOpen?' · 🎯 아직 만점 못 받은 문항이 있어 재시험이 가능합니다.':' · 🎉 모든 문항 만점입니다!'),pass?'pass':'fail');
+_wsRefreshRetryButton();}
+else{_banner('<div style="color:#b23a48;font-weight:700;">채점 응답 오류'+(res&&res.error?(': '+res.error):'')+'</div><div style="font-size:13px;margin-top:4px;">객관식 자동: '+p.objectiveEarned+'/'+p.objectiveMax+'점. 서술형은 문항 옆 공개 정답으로 확인하세요.</div>');}
+}).catch(function(e){_banner('<div style="color:#b23a48;font-weight:700;">시트 응답을 읽지 못했습니다.</div><div style="font-size:13px;margin-top:4px;">(전송 자체는 되었을 수 있습니다.) 객관식 자동: '+p.objectiveEarned+'/'+p.objectiveMax+'점 ('+objPct+'%).</div>');});}
+function retryTest(){_setReveal(false);var box=document.getElementById('gradeBox');if(box)box.classList.remove('show');
+var sb=document.getElementById('scoreBanner');if(sb)sb.className='score-banner';
+_clearBadges();
+window.__WS_LOCKED={};_wsClearAttempt();_wsClearDraft();
+var root=document.getElementById('wsRoot');if(root)root.classList.remove('retry-mode');
+_setRetryBanner('');
+[].slice.call(document.querySelectorAll('[data-qid]')).forEach(function(h){h.classList.remove('q-locked','q-retry-target');h.removeAttribute('data-lock-label');h.removeAttribute('data-retry-label');[].slice.call(h.querySelectorAll('input,select,textarea')).forEach(function(el){el.disabled=false;});});
+[].slice.call(document.querySelectorAll('input.ws-input[data-role=answer], input[type=hidden][data-role=answer], input.ws-input[data-role=cmword], input.ws-input[data-role=cmcorrect], input.ws-input[data-role=gfixWrong], input.ws-input[data-role=gfixCorrect]')).forEach(function(i){i.value='';});
+[].slice.call(document.querySelectorAll('select.ws-select[data-role=match], select.ws-select[data-role=answer]')).forEach(function(s){s.value='';});
+[].slice.call(document.querySelectorAll('input[type=radio][data-role=choice], input[type=checkbox][data-role=mc], input[type=radio][data-role=cmchoice]')).forEach(function(r){r.checked=false;});
+[].slice.call(document.querySelectorAll('.arrange-tray')).forEach(function(tray){var ts=[].slice.call(tray.querySelectorAll('.tile'));for(var a=ts.length-1;a>0;a--){var b=Math.floor(Math.random()*(a+1));tray.insertBefore(ts[a],ts[b]);}_renumberTray(tray);});
+var btn=document.getElementById('bSubmit');if(btn)btn.textContent='✅ 테스트 제출';
+var rw=document.getElementById('bRetryWrong');if(rw)rw.classList.remove('show');
+window.__WS_START=new Date();}
+</script>
+</body>
+</html>
